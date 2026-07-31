@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/tauri-apps/tauri/dev/crates/tauri-config-schema/schema.json",
+  "productName": "ANTAI Sentinel",
+  "version": "1.0.0",
+  "identifier": "dev.antai.sentinel",
+  "build": {
+    "frontendDist": "../",
+    "devUrl": "../index.html"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "ANTAI — Autonomous AI Cyber Defense Sentinel",
+        "width": 1340,
+        "height": 860,
+        "resizable": true,
+        "fullscreen": false,
+        "transparent": false,
+        "decorations": true,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon.png"
+    ]
+  }
+}

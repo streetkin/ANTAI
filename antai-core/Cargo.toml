@@ -1,0 +1,22 @@
+[package]
+name = "antai-core"
+version = "1.0.0"
+edition = "2024"
+description = "ANTAI — Autonomous AI Cyber Defense Sentinel Core Engine"
+license = "MIT"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+axum = "0.8"
+tower-http = { version = "0.6", features = ["cors"] }
+reqwest = { version = "0.12", features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+chrono = "0.4"
+sysinfo = "0.33"
+
+[profile.release]
+opt-level = 3
+lto = true
+strip = true

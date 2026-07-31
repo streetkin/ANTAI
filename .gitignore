@@ -1,0 +1,16 @@
+# Rust Build Output
+/target/
+/**/target/
+
+# Node / Web
+node_modules/
+dist/
+.DS_Store
+
+# OS & Environment
+Thumbs.db
+*.env
+*.tmp
+*.log
+.vscode/
+.idea/

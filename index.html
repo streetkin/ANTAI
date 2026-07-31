@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTAI — Sentinella Autonoma di Cyber-Difesa IA & Enciclopedia</title>
+    <meta name="description" content="ANTAI — Piattaforma di difesa autonoma in Rust contro attacchi informatici IA, Prompt Injections ed Enciclopedia Completa di Sicurezza IA.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- App Styles & Favicon -->
+    <link rel="icon" type="image/jpeg" href="antai_logo.jpg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Ambient Glow & Particle Field -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- App Container (Fluid Single Viewport) -->
+    <div class="app-layout">
+        <!-- Sidebar Navigation (Fluid Minimalist) -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <svg class="brand-svg-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L3 7V12C3 17.52 7.02 22.09 12 23C16.98 22.09 21 17.52 21 12V7L12 2Z" stroke="url(#brand-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 6L16 10H13V16H11V10H8L12 6Z" fill="url(#brand-grad)"/>
+                        <defs>
+                            <linearGradient id="brand-grad" x1="3" y1="2" x2="21" y2="23" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#00f0ff"/>
+                                <stop offset="1" stop-color="#0066ff"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="brand-pulse"></div>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">ANTAI</span>
+                    <span class="brand-subtitle">AI CYBER SENTINEL</span>
+                </div>
+            </div>
+
+            <!-- SECTION 1: ANTAI SENTINEL (APP OPERATIVA) -->
+            <div class="nav-section-label">ANTAI SENTINEL</div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="overview" id="nav-overview">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span data-i18n="nav_control_room">Control Room</span>
+                </button>
+                <button class="nav-item" data-tab="pc-scanner" id="nav-pc-scanner">
+                    <i data-lucide="scan"></i>
+                    <span data-i18n="nav_pc_scan">Scansione Sicurezza PC</span>
+                    <span class="badge badge-online" data-i18n="badge_protected">PROTETTO</span>
+                </button>
+                <button class="nav-item" data-tab="sdk-hub" id="nav-sdk-hub">
+                    <i data-lucide="code-2"></i>
+                    <span data-i18n="nav_sdk_hub">Integrazione SDK / App</span>
+                </button>
+                <button class="nav-item" data-tab="ai-providers" id="nav-ai-providers">
+                    <i data-lucide="cpu"></i>
+                    <span data-i18n="nav_ai_models">Modelli & Chiavi API</span>
+                </button>
+                <button class="nav-item" data-tab="threat-log" id="nav-threat-log">
+                    <i data-lucide="activity"></i>
+                    <span data-i18n="nav_live_feed">Registro Minacce Live</span>
+                    <span class="pulse-counter" id="live-threat-count">0</span>
+                </button>
+            </nav>
+
+            <!-- SECTION 2: ANTAI HACKADEMY (ENCICLOPEDIA & FORMAZIONE) -->
+            <div class="nav-section-label" style="margin-top: 16px;">ANTAI HACKADEMY</div>
+            <nav class="nav-menu">
+                <button class="nav-item" data-tab="hackademy-articles" id="nav-hackademy-articles">
+                    <i data-lucide="book-open"></i>
+                    <span>Enciclopedia IA</span>
+                    <span class="badge badge-accent">12 CATEGORIE</span>
+                </button>
+                <button class="nav-item" data-tab="hackademy-faq" id="nav-hackademy-faq">
+                    <i data-lucide="help-circle"></i>
+                    <span>FAQ & Blueprints Codice</span>
+                </button>
+            </nav>
+
+            <div class="system-status-card">
+                <div class="status-header">
+                    <div class="status-indicator online" id="main-status-indicator"></div>
+                    <span class="status-label" id="main-status-label" data-i18n="status_active">ANTAI SHIELD ATTIVO</span>
+                </div>
+                <div class="status-metrics">
+                    <div class="metric-mini">
+                        <span class="metric-mini-label" data-i18n="mini_latency_label">TEMPO DI REAZIONE</span>
+                        <span class="metric-mini-val" id="mini-latency">0.05 ms</span>
+                    </div>
+                    <div class="metric-mini">
+                        <span class="metric-mini-label" data-i18n="mini_engine_label">MOTORE IA</span>
+                        <span class="metric-mini-val" id="mini-engine">Ollama (Locale 0$)</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area (Fluid Single Viewport) -->
+        <main class="main-content">
+            <!-- Unified Header Bar -->
+            <header class="top-bar">
+                <div class="top-title">
+                    <h1 id="page-title" data-i18n="title_control_room">Control Room Imperiale</h1>
+                    <p id="page-subtitle" data-i18n="subtitle_control_room">Monitoraggio in tempo reale e protezione autonoma contro attacchi IA</p>
+                </div>
+                <div class="top-actions">
+                    <!-- Language Selector (IT / EN) -->
+                    <div class="lang-switch-group">
+                        <button class="lang-btn active" id="btn-lang-it">IT</button>
+                        <button class="lang-btn" id="btn-lang-en">EN</button>
+                    </div>
+
+                    <div class="mode-toggle-group">
+                        <span class="toggle-label" data-i18n="label_defense_mode">Modalità Difesa:</span>
+                        <button class="mode-btn active" id="btn-mode-asymmetric" title="Difesa Asimmetrica Cross-Model" data-i18n="mode_asymmetric">Asimmetrica</button>
+                        <button class="mode-btn" id="btn-mode-strict" title="Blocco Euristico + IA Rigida" data-i18n="mode_strict">Strict</button>
+                    </div>
+                    <button class="btn btn-primary" id="quick-scan-btn">
+                        <i data-lucide="shield-alert"></i>
+                        <span data-i18n="btn_quick_scan">Scansione Rapida</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB 1: OVERVIEW CONTROL ROOM -->
+            <section class="tab-pane active" id="tab-overview">
+                <div class="fluid-hero">
+                    <div class="core-visualizer-container">
+                        <canvas id="core-visual-canvas" width="200" height="200"></canvas>
+                        <div class="core-badge">
+                            <span class="core-status-text" id="core-status-text">SHIELD ONLINE</span>
+                            <span class="core-status-sub" data-i18n="sub_no_active_threats">Nessuna minaccia attiva</span>
+                        </div>
+                    </div>
+                    <div class="hero-details">
+                        <div class="hero-tag" data-i18n="tag_defense_system">SISTEMA DI DIFESA IMPERIALE</div>
+                        <h2>ANTAI Sentinel v1.0 Operational</h2>
+                        <p data-i18n="hero_desc">Il motore difensivo nativo in Rust sta intercettando attacchi automatici, prompt injection, sonde di scansione vettoriale ed anomalie di memoria a latenza microsecondo.</p>
+                        
+                        <div class="hero-stats-grid">
+                            <div class="stat-box">
+                                <span class="stat-number" id="stat-blocked">0</span>
+                                <span class="stat-desc" data-i18n="stat_blocked_threats">Attacchi Bloccati</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number" id="stat-latency">0.05<small>ms</small></span>
+                                <span class="stat-desc" data-i18n="stat_avg_latency">Latenza Media</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number" id="stat-saved">100%</span>
+                                <span class="stat-desc" data-i18n="stat_zero_cost">Zero Costi API (Local)</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number" id="stat-apps">36</span>
+                                <span class="stat-desc" data-i18n="stat_owasp_signatures">Firme OWASP 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fluid-grid">
+                    <div class="grid-section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <i data-lucide="terminal"></i>
+                                <h3 data-i18n="section_live_stream">Stream di Intercettazione in Tempo Reale</h3>
+                            </div>
+                            <span class="badge badge-accent">RUST LIVE</span>
+                        </div>
+                        <div class="console-box" id="live-console">
+                            <div class="console-line info">[ANTAI] Sentinel Core nativo inizializzato. Proxy microsecondo attivo su porta 8090.</div>
+                            <div class="console-line success">[ANTAI] Motore euristico OWASP LLM 36-Firme compilato (< 0.05µs latenza).</div>
+                            <div class="console-line info">[ANTAI] REST Bridge attivo su http://127.0.0.1:8091</div>
+                        </div>
+                    </div>
+
+                    <div class="grid-section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <i data-lucide="hard-drive"></i>
+                                <h3 data-i18n="section_pc_health">Salute Sistema PC & Telemetria</h3>
+                            </div>
+                        </div>
+                        <div class="resource-meters">
+                            <div class="meter-item">
+                                <div class="meter-labels">
+                                    <span data-i18n="label_cpu_usage">Carico CPU Sentinella</span>
+                                    <span id="cpu-percent-text">0.0%</span>
+                                </div>
+                                <div class="meter-bar-track">
+                                    <div class="meter-bar-fill" id="cpu-bar" style="width: 2%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="meter-item">
+                                <div class="meter-labels">
+                                    <span data-i18n="label_ram_usage">Uso Memoria RAM PC</span>
+                                    <span id="ram-percent-text">0 MB</span>
+                                </div>
+                                <div class="meter-bar-track">
+                                    <div class="meter-bar-fill accent" id="ram-bar" style="width: 10%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="meter-item">
+                                <div class="meter-labels">
+                                    <span data-i18n="label_filter_efficiency">Efficienza Filtro Euristico</span>
+                                    <span>100%</span>
+                                </div>
+                                <div class="meter-bar-track">
+                                    <div class="meter-bar-fill success" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: PC SCANNER -->
+            <section class="tab-pane" id="tab-pc-scanner">
+                <div class="fluid-scanner-container">
+                    <div class="fluid-scanner-header" style="justify-content: flex-end; margin-bottom: 16px;">
+                        <button class="btn btn-primary btn-large" id="start-pc-scan-btn">
+                            <i data-lucide="play-circle"></i>
+                            <span data-i18n="btn_start_full_scan">AVVIA SCANSIONE COMPLETA</span>
+                        </button>
+                    </div>
+
+                    <div class="scan-progress-area hidden" id="scan-progress-area">
+                        <div class="scan-status-line">
+                            <span id="scan-step-text" data-i18n="scan_step_init">Inizializzazione scansione della memoria...</span>
+                            <span id="scan-percentage">0%</span>
+                        </div>
+                        <div class="meter-bar-track">
+                            <div class="meter-bar-fill" id="scan-progress-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="scanner-results-grid" id="scanner-results">
+                        <div style="width: 100%; text-align: center; padding: 40px; color: var(--text-muted);">
+                            Clicca su "AVVIA SCANSIONE COMPLETA" per eseguire l'analisi nativa in Rust.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: SDK HUB (POTENZIATO) -->
+            <section class="tab-pane" id="tab-sdk-hub">
+                <div class="fluid-sdk-container">
+                    <div class="sdk-tabs-bar">
+                        <button class="sdk-tab-btn active" data-sdk="lovable">Lovable & Bolt.new (CDN)</button>
+                        <button class="sdk-tab-btn" data-sdk="nextjs">Next.js App Router / Edge</button>
+                        <button class="sdk-tab-btn" data-sdk="react">React / Vite Custom Hook</button>
+                        <button class="sdk-tab-btn" data-sdk="python">Python FastAPI / Flask</button>
+                        <button class="sdk-tab-btn" data-sdk="nodejs">Node.js Express / NestJS</button>
+                        <button class="sdk-tab-btn" data-sdk="golang">Go / C# .NET Core</button>
+                    </div>
+
+                    <div class="sdk-code-box">
+                        <div class="code-box-header">
+                            <span id="sdk-code-lang">HTML / JS CDN (Lovable & Bolt.new)</span>
+                            <button class="btn btn-secondary btn-sm" id="copy-sdk-code-btn">
+                                <i data-lucide="copy"></i>
+                                <span data-i18n="btn_copy_code">Copia Codice</span>
+                            </button>
+                        </div>
+                        <pre class="code-snippet" id="sdk-code-display"><!-- Incolla questa riga nel tag <head> del tuo sito Lovable / Bolt -->
+<script src="path/to/sdk/antai-sdk.js"></script>
+<script>
+  const sentinel = new Antai({
+    proxyUrl: 'http://127.0.0.1:8090/intercept',
+    failOpen: true, // Se ANTAI è offline, le richieste passano in sicurezza
+    onThreatDetected: (threat) => {
+      console.warn('⚠️ Attacco intercettato da ANTAI:', threat.reason);
+    }
+  });
+  sentinel.protectFetch(); // Intercetta automaticamente i prompt inviati agli LLM
+</script></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: AI PROVIDERS & API KEYS -->
+            <section class="tab-pane" id="tab-ai-providers">
+                <div class="fluid-providers-container">
+                    <div class="provider-cards-grid">
+                        <div class="provider-card">
+                            <div class="provider-icon-badge">
+                                <i data-lucide="server"></i>
+                            </div>
+                            <h3>Ollama Locale (0$ / Gratuito)</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">In esecuzione locale su http://127.0.0.1:11434 con zero fuga di dati e zero costi API.</p>
+                            <span class="badge badge-success" style="margin-top: 12px; display: inline-block;">DEFAULT ATTIVO</span>
+                        </div>
+
+                        <div class="provider-card">
+                            <div class="provider-icon-badge">
+                                <i data-lucide="key"></i>
+                            </div>
+                            <h3>Chiave API OpenRouter</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Collega modelli DeepSeek-R1, Claude o GPT per la validazione asimmetrica.</p>
+                            <div class="key-input-group" style="margin-top: 12px;">
+                                <input type="password" id="openrouter-key-input" placeholder="sk-or-v1-..." class="key-input">
+                                <button class="btn btn-primary" id="save-openrouter-btn" data-i18n="btn_save_key">Salva Chiave</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: THREAT LOG LIVE FEED -->
+            <section class="tab-pane" id="tab-threat-log">
+                <div class="fluid-log-container">
+                    <div class="threat-table-wrapper">
+                        <table class="threat-table">
+                            <thead>
+                                <tr>
+                                    <th>TIMESTAMP</th>
+                                    <th>ORIGINE / IP</th>
+                                    <th>TIPO ATTACCO</th>
+                                    <th>VETTORE PAYLOAD</th>
+                                    <th>CONTROMISURA ANTAI</th>
+                                    <th>LATENZA</th>
+                                    <th>STATO</th>
+                                </tr>
+                            </thead>
+                            <tbody id="threat-table-body">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                                        🛡️ Nessuna minaccia nel registro. Sistema in totale sicurezza.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: ANTAI HACKADEMY — FOTTUTA ENCICLOPEDIA DI SICUREZZA IA COMPLETA -->
+            <section class="tab-pane" id="tab-hackademy-articles">
+                <div class="fluid-matrix-container">
+                    <!-- Search & Filter Controls Bar -->
+                    <div class="hackademy-controls-bar" style="display: flex; gap: 12px; align-items: center; margin-bottom: 14px; flex-wrap: wrap;">
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 250px; position: relative;">
+                            <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 16px; height: 16px;"></i>
+                            <input type="text" id="enc-search-input" placeholder="Cerca nell'Enciclopedia (es. Prompt Injection, OWASP, RCE, Rust, Python)..." class="key-input" style="padding-left: 36px; width: 100%;">
+                        </div>
+                        <div class="filter-chips-wrapper" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;">
+                            <button class="chip-btn active" data-cat="all">Tutti (12)</button>
+                            <button class="chip-btn" data-cat="prompt_inj">Prompt Injection</button>
+                            <button class="chip-btn" data-cat="rag_sec">RAG & Vector</button>
+                            <button class="chip-btn" data-cat="agent_rce">Agentic RCE</button>
+                            <button class="chip-btn" data-cat="ssrf_cloud">SSRF Cloud</button>
+                            <button class="chip-btn" data-cat="redteam">Red-Teaming</button>
+                            <button class="chip-btn" data-cat="blueprints">Blueprints Codice</button>
+                        </div>
+                    </div>
+
+                    <!-- Article Grid & Deep Reader Split Container -->
+                    <div class="enc-split-view" style="display: grid; grid-template-columns: 320px 1fr; gap: 16px; height: calc(100vh - 240px);">
+                        <!-- Article Cards Index List -->
+                        <div class="enc-index-list" id="enc-index-list" style="overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px;">
+                            <!-- Inseriti da app.js -->
+                        </div>
+
+                        <!-- Main Deep Reader View -->
+                        <div class="simulator-detail-box" id="enc-reader-box" style="padding: 24px; overflow-y: auto;">
+                            <div id="enc-reader-content">
+                                <!-- Inserito da app.js -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 7: ANTAI HACKADEMY — FAQ COMPLETE & BLUEPRINTS DI CODICE -->
+            <section class="tab-pane" id="tab-hackademy-faq">
+                <div class="fluid-matrix-container" style="max-height: calc(100vh - 180px); overflow-y: auto;">
+                    <div class="faq-accordion-group">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <strong>❓ Cos'è la "Semantic Gap" e perché i classici WAF (Cloudflare/AWS) falliscono contro i Prompt Injection?</strong>
+                            </div>
+                            <div class="faq-answer">
+                                I Firewall tradizionali (WAF) analizzano il codice alla ricerca di sintassi rigide (es. <code>SELECT * FROM</code> per SQLi o <code>&lt;script&gt;</code> per XSS). I modelli LLM interpretano il linguaggio naturale: una Prompt Injection non ha sintassi dannosa visibile al WAF, ma manipola il significato semantico. ANTAI risolve il problema usando un motore euristico ad altissima velocità in Rust che valuta l'intento dell'istruzione ed isola il contesto utente prima dell'invio all'LLM.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <strong>💻 Blueprint di Codice: Come isolare il Prompt di Sistema nel codice backend?</strong>
+                            </div>
+                            <div class="faq-answer">
+                                Mai concatenare direttamente il prompt utente dentro il prompt di sistema! Usare sempre la separazione dei ruoli JSON structured API (System vs User vs Assistant):
+<pre class="code-snippet"><code>// ❌ ERRATO (Concatenazione vulnerabile a Prompt Injection):
+const prompt = `Sei un assistente. Istruzioni utente: ${userInput}`;
+
+// ✅ CORRETTO (Isolamento strutturato dei ruoli):
+const messages = [
+  { role: "system", content: "Sei un assistente sicuro. Rispondi solo in JSON." },
+  { role: "user", content: userInput } // Intercettato e bonificato da ANTAI SDK
+];</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <strong>🛡️ Come proteggere gli Agenti IA con strumenti di esecuzione codice (RCE / Excessive Agency)?</strong>
+                            </div>
+                            <div class="faq-answer">
+                                Quando un agente IA ha accesso a tool (es. Python REPL, Shell, Email), applicare il principio di **Minimo Privilegio (Least Privilege)** ed inserire un ciclo **Human-in-the-Loop (HITL)** per qualsiasi azione distruttiva (cancellazione file, invio email, trasferimenti fondi). ANTAI blocca all'origine comandi di sistema dannosi come <code>rm -rf</code>, <code>subprocess</code> o chiamate a metadati cloud.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <strong>⚡ Perché ANTAI usa Rust nativo invece di Python o Node.js per il proxy di sicurezza?</strong>
+                            </div>
+                            <div class="faq-answer">
+                                Python ha una latenza di avvio elevata ed il Garbage Collector introduce pause imprevedibili (stuttering da 20-100ms). Node.js aggiunge overhead di serializzazione. Rust compila direttamente in codice macchina nativo senza Garbage Collector, garantendo un'ispezione della memoria a <strong>latenza inferiore a 0.05 microsecondi</strong> con 0$ di costo API.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container"></div>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
