@@ -1,23 +1,22 @@
-<div align="center">
-  <img src="antai_logo_pixel.png" alt="ANTAI Pixel Cyber Logo" width="180" style="border-radius: 16px; margin-bottom: 12px;">
+# 🛡️ ANTAI — Autonomous AI Cyber Defense Sentinel
 
-  # 🛡️ ANTAI — Autonomous AI Cyber Defense Sentinel
-
-  [![Rust](https://img.shields.io/badge/rust-1.95.0-blue.svg)](https://www.rust-lang.org/)
-  [![License](https://img.shields.io/badge/license-MIT-00f0ff.svg)](LICENSE)
-  [![OWASP](https://img.shields.io/badge/OWASP%20LLM%20Top%2010-Compliant-0066ff.svg)](#)
-  [![Latency](https://img.shields.io/badge/latency-%3C%200.05%C2%B5s-brightgreen.svg)](#)
-</div>
-
-<br>
+[![Rust](https://img.shields.io/badge/rust-1.95.0-blue.svg)](https://www.rust-lang.org/)
+[![License](https://img.shields.io/badge/license-MIT-00f0ff.svg)](LICENSE)
+[![OWASP](https://img.shields.io/badge/OWASP%20LLM%20Top%2010-Compliant-0066ff.svg)](#)
+[![Latency](https://img.shields.io/badge/latency-%3C%200.05%C2%B5s-brightgreen.svg)](#)
 
 **ANTAI** is an open-source, native Rust autonomous cyber-defense sentinel engineered to intercept, analyze, and neutralize AI-driven exploits (Prompt Injections, Jailbreak, RAG Context Poisoning, Agentic Tool Execution Hijacking, and System File LFI) at **< 0.05µs latency** with **$0 API cost**.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                       ANTAI ARCHITECTURE TOPOLOGY                           │
+│   █████╗ ███╗   ██╗████████╗█████╗ ██╗                                      │
+│  ██╔══██╗████╗  ██║╚══██╔══╝██╔══██╗██║  AI CYBER SENTINEL                  │
+│  ███████║██╔██╗ ██║   ██║   ███████║██║  AUTONOMOUS RUST ENGINE             │
+│  ██╔══██║██║╚██╗██║   ██║   ██╔══██║██║  MICROSECOND AI DEFENSE             │
+│  ██║  ██║██║ ╚████║   ██║   ██║  ██║██║                                     │
+│  ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚═╝                                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│  Client App / Browser / Web App (Lovable / Bolt / Next.js / React)         │
+│  Client App / Browser / Web App (Lovable / Bolt / Next.js / React)          │
 │                        │                                                    │
 │                        ▼ (HTTP Intercept Request)                           │
 │  ┌───────────────────────────────────────────────────────────────────────┐  │
