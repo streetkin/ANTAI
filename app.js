@@ -1,6 +1,6 @@
 /* ANTAI CONTAINER-LESS FLUID IMPERIAL — ENTERPRISE ENGINE (v1.0 RELEASE) */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
     if (window.lucide && typeof lucide.createIcons === 'function') {
         lucide.createIcons();
     }
@@ -571,34 +571,44 @@ pub async fn inspect_and_forward(req_payload: &str) -> Result<String, SecurityEr
     if (btnLangIt) btnLangIt.addEventListener('click', () => setLanguage('it'));
 
     // 5. GLOBAL TAB NAVIGATION HANDLER
+    window.switchTab = function(targetTab) {
+        if (!targetTab) return;
+        console.log('[ANTAI NAV] Switching to tab:', targetTab);
+
+        const navBtns = document.querySelectorAll('.nav-item');
+        const panes = document.querySelectorAll('.tab-pane');
+
+        navBtns.forEach(n => {
+            if (n.getAttribute('data-tab') === targetTab) {
+                n.classList.add('active');
+            } else {
+                n.classList.remove('active');
+            }
+        });
+
+        panes.forEach(p => {
+            if (p.id === `tab-${targetTab}`) {
+                p.classList.add('active');
+                p.style.display = 'flex';
+            } else {
+                p.classList.remove('active');
+                p.style.display = 'none';
+            }
+        });
+
+        if (tabMeta[targetTab]) {
+            const meta = tabMeta[targetTab];
+            if (pageTitle) pageTitle.textContent = meta.title[currentLang] || meta.title['it'];
+            if (pageSubtitle) pageSubtitle.textContent = meta.subtitle[currentLang] || meta.subtitle['it'];
+        }
+    };
+
     document.addEventListener('click', (e) => {
         const navBtn = e.target.closest('.nav-item[data-tab]');
         if (navBtn) {
             e.preventDefault();
             const targetTab = navBtn.getAttribute('data-tab');
-            console.log('[ANTAI NAV] Switching to tab:', targetTab);
-
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelectorAll('.tab-pane').forEach(p => {
-                p.classList.remove('active');
-                p.style.display = 'none';
-            });
-
-            navBtn.classList.add('active');
-            const targetPane = document.getElementById(`tab-${targetTab}`);
-            if (targetPane) {
-                targetPane.classList.add('active');
-                targetPane.style.display = 'flex';
-                console.log('[ANTAI NAV] Activated pane:', targetPane.id);
-            } else {
-                console.warn('[ANTAI NAV] Pane not found: tab-' + targetTab);
-            }
-
-            if (tabMeta[targetTab]) {
-                const meta = tabMeta[targetTab];
-                if (pageTitle) pageTitle.textContent = meta.title[currentLang] || meta.title['it'];
-                if (pageSubtitle) pageSubtitle.textContent = meta.subtitle[currentLang] || meta.subtitle['it'];
-            }
+            window.switchTab(targetTab);
         }
     });
 
@@ -1154,6 +1164,10 @@ func AntaiMiddleware(next http.Handler) http.Handler {
                     }
                 }, 400);
             });
-        }
-    }
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}

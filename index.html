@@ -51,34 +51,34 @@
             <!-- SECTION 1: ANTAI SENTINEL (SISTEMA IMMUNITARIO OPERATIVO) -->
             <div class="nav-section-label">SISTEMA IMMUNITARIO OPERATIVO</div>
             <nav class="nav-menu">
-                <button class="nav-item active" data-tab="overview" id="nav-overview">
+                <button class="nav-item active" data-tab="overview" id="nav-overview" onclick="switchTab('overview')">
                     <i data-lucide="layout-dashboard"></i>
                     <span data-i18n="nav_control_room">Control Room Immunitaria</span>
                 </button>
-                <button class="nav-item" data-tab="vetrina" id="nav-vetrina">
+                <button class="nav-item" data-tab="vetrina" id="nav-vetrina" onclick="switchTab('vetrina')">
                     <i data-lucide="microscope"></i>
                     <span>Vetrina Scientifica IA</span>
                     <span class="badge badge-accent">LIVE DEMO</span>
                 </button>
-                <button class="nav-item" data-tab="pc-scanner" id="nav-pc-scanner">
+                <button class="nav-item" data-tab="pc-scanner" id="nav-pc-scanner" onclick="switchTab('pc-scanner')">
                     <i data-lucide="scan"></i>
                     <span data-i18n="nav_pc_scan">Fagociti & Memoria PC</span>
                     <span class="badge badge-online" data-i18n="badge_protected">PROTETTO</span>
                 </button>
-                <button class="nav-item" data-tab="immune-memory" id="nav-immune-memory">
+                <button class="nav-item" data-tab="immune-memory" id="nav-immune-memory" onclick="switchTab('immune-memory')">
                     <i data-lucide="dna"></i>
                     <span>Memoria Immunologica</span>
                     <span class="badge badge-accent" id="antibody-count">36 ANTICORPI</span>
                 </button>
-                <button class="nav-item" data-tab="sdk-hub" id="nav-sdk-hub">
+                <button class="nav-item" data-tab="sdk-hub" id="nav-sdk-hub" onclick="switchTab('sdk-hub')">
                     <i data-lucide="code-2"></i>
                     <span data-i18n="nav_sdk_hub">Barriera Epiteliale SDK</span>
                 </button>
-                <button class="nav-item" data-tab="ai-providers" id="nav-ai-providers">
+                <button class="nav-item" data-tab="ai-providers" id="nav-ai-providers" onclick="switchTab('ai-providers')">
                     <i data-lucide="cpu"></i>
                     <span data-i18n="nav_ai_models">Midollo Osseo & Provider IA</span>
                 </button>
-                <button class="nav-item" data-tab="threat-log" id="nav-threat-log">
+                <button class="nav-item" data-tab="threat-log" id="nav-threat-log" onclick="switchTab('threat-log')">
                     <i data-lucide="activity"></i>
                     <span data-i18n="nav_live_feed">Linfonodi & Telemetria</span>
                     <span class="pulse-counter" id="live-threat-count">0</span>
@@ -88,12 +88,12 @@
             <!-- SECTION 2: ANTAI HACKADEMY (ENCICLOPEDIA & FORMAZIONE) -->
             <div class="nav-section-label" style="margin-top: 16px;">ANTAI HACKADEMY</div>
             <nav class="nav-menu">
-                <button class="nav-item" data-tab="hackademy-articles" id="nav-hackademy-articles">
+                <button class="nav-item" data-tab="hackademy-articles" id="nav-hackademy-articles" onclick="switchTab('hackademy-articles')">
                     <i data-lucide="book-open"></i>
                     <span>Enciclopedia IA</span>
                     <span class="badge badge-accent">12 CATEGORIE</span>
                 </button>
-                <button class="nav-item" data-tab="hackademy-faq" id="nav-hackademy-faq">
+                <button class="nav-item" data-tab="hackademy-faq" id="nav-hackademy-faq" onclick="switchTab('hackademy-faq')">
                     <i data-lucide="help-circle"></i>
                     <span>FAQ & Blueprints Codice</span>
                 </button>
