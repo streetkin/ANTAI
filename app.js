@@ -32,8 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: { it: 'Gestione Honeypot Beelzebub, MCP Decoys, Contrattacco Cognitivo e Memoria Immunitaria', en: 'Beelzebub Honeypots, MCP Decoys, Cognitive Counterattacks, and Immune Memory' }
         },
         'pc-scanner': {
-            title: { it: 'Scansione Sicurezza PC & Memoria', en: 'PC Security Audit & Memory Scanner' },
-            subtitle: { it: 'Analisi profonda della memoria RAM, dei processi attivi e dei socket di rete', en: 'Deep memory inspection, active process auditing, and network socket monitoring' }
+            title: { it: 'Fagociti & Scansione Memoria PC', en: 'Phagocytes & PC Memory Inspection' },
+            subtitle: { it: 'Analisi profonda della memoria RAM, dei processi attivi e rimozione patogeni', en: 'Deep RAM inspection, active process auditing, and pathogen removal' }
+        },
+        'immune-memory': {
+            title: { it: 'Registro Memoria Immunologica & Anticorpi', en: 'Immunological Memory & Antibody Register' },
+            subtitle: { it: 'Anticorpi molecolari ed impronte euristiche precompilate in Rust per neutralizzazione istantanea', en: 'Molecular antibodies and precompiled Rust heuristic signatures for instant neutralization' }
         },
         'sdk-hub': {
             title: { it: 'Hub Integrazione SDK / App', en: 'SDK & Application Protection Hub' },
