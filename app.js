@@ -576,14 +576,22 @@ pub async fn inspect_and_forward(req_payload: &str) -> Result<String, SecurityEr
         if (navBtn) {
             e.preventDefault();
             const targetTab = navBtn.getAttribute('data-tab');
+            console.log('[ANTAI NAV] Switching to tab:', targetTab);
 
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => {
+                p.classList.remove('active');
+                p.style.display = 'none';
+            });
 
             navBtn.classList.add('active');
             const targetPane = document.getElementById(`tab-${targetTab}`);
             if (targetPane) {
                 targetPane.classList.add('active');
+                targetPane.style.display = 'flex';
+                console.log('[ANTAI NAV] Activated pane:', targetPane.id);
+            } else {
+                console.warn('[ANTAI NAV] Pane not found: tab-' + targetTab);
             }
 
             if (tabMeta[targetTab]) {
