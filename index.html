@@ -435,18 +435,18 @@
                                 <span data-i18n="btn_copy_code">Copia Codice</span>
                             </button>
                         </div>
-                        <pre class="code-snippet" id="sdk-code-display"><!-- Incolla questa riga nel tag <head> del tuo sito Lovable / Bolt -->
-<script src="path/to/sdk/antai-sdk.js"></script>
-<script>
+                        <pre class="code-snippet" id="sdk-code-display">&lt;!-- Incolla questa riga nel tag &lt;head&gt; del tuo sito Lovable / Bolt --&gt;
+&lt;script src="path/to/sdk/antai-sdk.js"&gt;&lt;/script&gt;
+&lt;script&gt;
   const sentinel = new Antai({
     proxyUrl: 'http://127.0.0.1:8090/intercept',
     failOpen: true, // Se ANTAI è offline, la richiesta passa in sicurezza
-    onThreatDetected: (threat) => {
+    onThreatDetected: (threat) =&gt; {
       console.warn('⚠️ Attacco intercettato da ANTAI:', threat.reason);
     }
   });
   sentinel.protectFetch(); // Intercetta automaticamente i prompt inviati agli LLM
-</script></pre>
+&lt;/script&gt;</pre>
                     </div>
                 </div>
             </section>
