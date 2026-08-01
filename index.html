@@ -703,6 +703,8 @@ const messages = [
             if (tabId === 'hackademy-articles' && typeof window.renderEncIndex === 'function') {
                 window.renderEncIndex();
             }
+        }
+
         function selectEncArticle(artId, el) {
             if (el) {
                 document.querySelectorAll('.enc-card').forEach(function(c) { c.classList.remove('active'); });
