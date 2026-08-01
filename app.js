@@ -60,12 +60,11 @@ window.switchTab = function(targetTab) {
     });
 
     panes.forEach(p => {
+        p.removeAttribute('style');
         if (p.id === `tab-${targetTab}`) {
             p.classList.add('active');
-            p.style.display = 'flex';
         } else {
             p.classList.remove('active');
-            p.style.display = 'none';
         }
     });
 
@@ -1151,9 +1150,9 @@ func AntaiMiddleware(next http.Handler) http.Handler {
 
 
     if (quickScanBtn) {
-        quickScanBtn.addEventListener('click', () => {
-            const pcTabBtn = document.getElementById('nav-pc-scanner');
-            if (pcTabBtn) pcTabBtn.click();
+        quickScanBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.switchTab('pc-scanner');
             const startScan = document.getElementById('start-pc-scan-btn');
             if (startScan) startScan.click();
         });

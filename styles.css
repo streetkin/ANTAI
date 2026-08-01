@@ -399,7 +399,7 @@ html, body {
 
 /* Tab Panes Container */
 .tab-pane {
-    display: none;
+    display: none !important;
     flex: 1;
     padding: 24px 32px;
     overflow-y: auto;
@@ -407,9 +407,10 @@ html, body {
 }
 
 .tab-pane.active {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 24px;
+    width: 100%;
 }
 
 /* Overview Hero Section */
