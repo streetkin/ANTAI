@@ -5,14 +5,15 @@
 </p>
 
 <p align="center">
-  <b>Un'infrastruttura di Cybersicurezza per la Protezione Attiva dei Sistemi di Intelligenza Artificiale</b><br>
+  <b>Un'infrastruttura di Cybersicurezza Nativa per la Protezione Attiva dei Sistemi di Intelligenza Artificiale</b><br>
   <i>Ispirata al Sistema Immunitario Biologico (Deception Engine & Memoria Immunologica)</i>
 </p>
 
 <p align="center">
   <a href="#-visione--metafora-immunologica"><img src="https://img.shields.io/badge/Architecture-Biological%20Immune-008751.svg" alt="Biological Immune System"></a>
   <a href="#-stack-tecnologico"><img src="https://img.shields.io/badge/Rust-1.95-cd212a.svg" alt="Rust Native Core"></a>
-  <a href="#-stack-tecnologico"><img src="https://img.shields.io/badge/Latency-%3C%200.05%C2%B5s-1a73e8.svg" alt="Ultra Low Latency"></a>
+  <a href="#-stack-tecnologico"><img src="https://img.shields.io/badge/Desktop%20App-Tauri%202.0-1a73e8.svg" alt="Tauri Native Desktop"></a>
+  <a href="#-requisiti-di-sistema--compatibilita-pc"><img src="https://img.shields.io/badge/Latency-%3C%200.05%C2%B5s-1a73e8.svg" alt="Ultra Low Latency"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-050508.svg" alt="License"></a>
 </p>
 
@@ -30,107 +31,105 @@ Mentre i firewall e le guardrail tradizionali agiscono come barriere rigide e st
 
 ---
 
-## 🏗️ Architettura del Sistema
+## 🏗️ Architettura del Sistema (Hybrid Enterprise Native)
 
-ANTAI è progettato con un'architettura **Asimmetrica e Ad Alte Prestazioni**:
+ANTAI è strutturato come un vero software di sicurezza professionale a doppio livello:
 
 ```
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                         Client App / Web Browser                            │
- │              (SDK Universal Proxy / Intercettatore Rest Fetch)              │
- └──────────────────────────────────────┬──────────────────────────────────────┘
-                                        │ (Intercettazione HTTP / API)
-                                        ▼
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │ ⚡ ANTAI NATIVE RUST CORE (Porta 8090 Interceptor / Porta 8091 REST Bridge)  │
- ├─────────────────────────────────────────────────────────────────────────────┤
- │                                                                             │
- │  1. 🧬 Sanitizer Istintivo (Micro-Latenza < 0.05µs, Zero GC)                │
- │     Analisi Euristica ad altissima frequenza per blocco immediato          │
- │                                                                             │
- │  2. 🪤 Deception Engine (Esche dinamiche & Contromisure attive)             │
- │     Neutralizzazione attiva degli agenti ostili tramite risposte fittizie   │
- │                                                                             │
- │  3. 💉 Memoria Immunologica (Registro Anticorpi Evolutivi)                 │
- │     Apprendimento continuo e generazione di regole protettive dinamiche    │
- │                                                                             │
- │  4. 🛡️ System Audit Engine (sysinfo & process monitoring)                  │
- │     Monitoraggio integrità del sistema host in background                   │
- │                                                                             │
- └──────────────────────────────────────┬──────────────────────────────────────┘
-                                        │
-                      ┌─────────────────┴─────────────────┐
-                      ▼                                   ▼
-          🛑 MINACCIA BLOCCATA                 ✅ TRAFFICO PULITO
-       (HTTP 403 / Deception Sandbox)       (Inoltro sicuro a LLM / DB)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      SOFTWARE DESKTOP NATIVO (.EXE)                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                       │
+        ┌──────────────────────────────┴──────────────────────────────┐
+        ▼                                                             ▼
+┌──────────────────────────────────────────┐    ┌─────────────────────────────┐
+│ ⚡ ANTAI RUST CORE ENGINE (Background)    │    │ 💻 ANTAI DESKTOP GUI        │
+├──────────────────────────────────────────┤    ├─────────────────────────────┤
+│ • Porta 8090: Interception Proxy         │    │ • Finestra Nativa (Tauri)   │
+│ • Porta 8091: REST Bridge API            │ ◄─►│ • Control Room & Telemetria │
+│ • Intercettazione < 0.05µs ($0 Costi)    │    │ • Nessun browser richiesto  │
+│ • Deception Sandbox & Audit RAM          │    │ • Icona hi-res nella barra  │
+└──────────────────────────────────────────┘    └─────────────────────────────┘
 ```
 
 ---
 
-## 💻 Stack Tecnologico
+## 🖥️ Requisiti di Sistema & Compatibilità PC
 
-Il progetto è costruito sfruttando tecnologie ad altissima efficienza e stabilità:
+ANTAI è stato ingegnerizzato in **Rust nativo** ed ottimizzato con **LTO (Link-Time Optimization)**. È estremamente leggero e può essere eseguito su un'ampia gamma di personal computer e server:
 
-### Backend Engine (Core Native)
-- **Rust (v1.95+)**: Linguaggio core scelto per la massima sicurezza di memoria, assenza di Garbage Collector ed esecuzione nativa.
-- **Axum & Tokio**: Framework web asincrono a microsecondi per la gestione a bassissima latenza dei socket e del proxy intercettatore.
-- **Sysinfo & Regex Nativi**: Moduli compilati direttamente per il monitoraggio dei processi host e la scansione euristica ultra-rapida.
+### ⚙️ Requisiti Hardware Minimi:
+- **CPU**: Qualsiasi processore x86_64 o ARM64 (Intel Core i3 / AMD Ryzen 3 / Apple Silicon M1 o superiori).
+- **RAM**: **Soltanto 128 MB di RAM libera** (il consumo medio a regime è inferiore a 40 MB).
+- **Spazio su Disco**: ~50 MB di spazio libero.
+- **Connessione Internet**: Non richiesta per la protezione base (funziona 100% offline). Opzionale per la sincronizzazione delle chiavi API esterne.
 
-### Frontend Control Room (Dashboard Enterprise)
-- **HTML5 & Vanilla JavaScript**: Nessun overhead di framework pesanti. Rendering immediato e reattivo.
-- **Google Material Enterprise Design System**: Interfaccia pulita, chiara, schematizzata e riposante per la vista con dettagli dell'eccellenza Tricolore italiana.
-- **Lucide Icons**: Iconografia moderna e pulita.
-
-### Client Integration (SDK Universal)
-- **ANTAI JS SDK (`antai-sdk.js`)**: Wrapper universale per applicazioni React, Next.js, Vue, Node.js e ambienti No-Code / Browser (Lovable, Bolt.new).
+### 💻 Sistemi Operativi Supportati:
+- **Windows**: Windows 10 e Windows 11 (64-bit) — *Supporto nativo WebView2*.
+- **Linux**: Ubuntu 20.04+, Debian 11+, Fedora, Arch Linux.
+- **macOS**: macOS 11 Big Sur o superiori (compresi chip M1/M2/M3/M4).
 
 ---
 
-## ⚡ Caratteristiche Principali
+## 🚀 Guida all'Installazione e Compilazione
 
-- **Latenza Trascurabile ($\le 0.05\mu s$)**: Il primo filtro lavora in memoria a velocità nativa hardware.
-- **Zero Costi di API Esterni**: L'analisi iniziale e la deception funzionano in locale su macchina.
-- **Modalità Strict & Asimmetrica**:
-  - *Strict Shield*: Blocco rigido ed immediato di qualsiasi anomalia rilevata.
-  - *Deception / Hackademy Loop*: Risposta guidata che neutralizza l'attaccante e ne studia le mosse per rafforzare le difese.
-- **Privacy & Sovranità dei Dati**: Nessun dato sensibile o prompt utente abbandona la rete locale se non esplicitamente autorizzato.
+### Opzione A: Avvio Diretto Eseguibili Nativi (Pronto all'Uso)
+Se hai scaricato il pacchetto compilato:
+1. Fai doppio click su **`ANTAI-Sentinel-Desktop.exe`**: si aprirà l'applicazione Desktop nativa.
+2. L'engine di protezione **`antai-core.exe`** verrà avviato automaticamente in background per proteggere le chiamate di rete.
 
 ---
 
-## 🚀 Avvio Rapido
+### Opzione B: Compilazione Nativa dai Sorgenti (Developer / Build Automation)
 
-### Requisiti
-- **Rust** (versione 1.80 o superiore)
-- Un browser web moderno (Chrome, Edge, Firefox)
+Se vuoi compilare il software da zero sul tuo computer:
 
-### 1. Compilazione dell'Engine Rust
-```bash
-cd antai-core
-cargo build --release
+#### 1. Requisiti di Sviluppo
+- Installa **Rust** (`rustup` / cargo 1.80+)
+- Su Windows: installa Microsoft Visual Studio Build Tools (C++ workload).
+
+#### 2. Compilazione Automatica
+Esegui lo script automatizzato nella cartella principale del progetto:
+- **Windows**: Fai doppio click sul file **`build_release_package.bat`** o compila da terminale:
+
+```powershell
+# Esegui lo script di Build Automatica
+.\build_release_package.bat
 ```
 
-### 2. Avvio Sentinella ANTAI
-Esegui lo script automatico:
-- **Windows**: Doppio click su `start_antai.bat`
-- **Linux / macOS**: Esegui `./target/release/antai-core`
-
-Apri il file `index.html` nel browser per accedere alla **Control Room**.
+Lo script eseguirà automaticamente:
+1. Compilazione dell'Engine Rust Backend (`antai-core.exe`) in modalità `release`.
+2. Sincronizzazione della directory isolata delle risorse `dist/`.
+3. Compilazione dell'Applicazione Desktop Nativa (`ANTAI-Sentinel-Desktop.exe`) tramite Tauri 2.0.
 
 ---
 
-## 📄 Integrazione Client (SDK)
+## 📘 Guida all'Utilizzo del Software
 
-Includi l'SDK in qualsiasi web app per intercettare e proteggere automaticamente tutte le chiamate API:
+### 1. Control Room (Dashboard Principale)
+All'avvio dell'applicazione desktop ti troverai nella **Control Room**:
+- **Stato Sentinella**: Mostra in tempo reale lo stato dell'engine (ONLINE / OFFLINE) e la latenza di analisi (tipicamente $< 0.05\mu s$).
+- **Modalità Operativa**: 
+  - `Shield Strict`: Blocco immediato e rigido di tutti i tentativi di injection o exploit.
+  - `Deception Mode`: Attivazione delle esche per confondere gli agenti ostili.
+
+### 2. Scansione Sicurezza PC
+Accedi al tab **Scansione Sicurezza PC** e clicca su *Avvia Scansione Completa*:
+- ANTAI analizzerà i processi attivi nella memoria RAM del computer alla ricerca di hacktool noti, miner o processi anomali.
+
+### 3. Integrazione nelle Tue Applicazioni (SDK Hub)
+Nel tab **Integrazione SDK / App** trovi i blueprint pronti da copiare per integrare ANTAI nelle tue Web App, server Node.js, Next.js, Python o Go:
 
 ```javascript
 import { Antai } from './sdk/antai-sdk.js';
 
+// Inizializza l'intercettatore locale
 const sentinel = new Antai({
     endpoint: 'http://localhost:8090/intercept',
-    failOpen: true // Garantisce continuità operativa
+    failOpen: true
 });
 
-// Attiva la protezione globale sulle fetch del client
+// Intercetta e protegge automaticamente tutte le chiamate API outgoing
 sentinel.protectFetch();
 ```
 
