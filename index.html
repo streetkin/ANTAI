@@ -513,67 +513,67 @@
                     <div class="hackademy-controls-bar" style="display: flex; gap: 12px; align-items: center; margin-bottom: 14px; flex-wrap: wrap;">
                         <div class="search-input-wrapper" style="flex: 1; min-width: 250px; position: relative;">
                             <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 16px; height: 16px;"></i>
-                            <input type="text" id="enc-search-input" placeholder="Cerca nell'Enciclopedia (es. Prompt Injection, OWASP, RCE, Rust, Python)..." class="key-input" style="padding-left: 36px; width: 100%;">
+                            <input type="text" id="enc-search-input" oninput="searchEncArticles(this.value)" placeholder="Cerca nell'Enciclopedia (es. Prompt Injection, OWASP, RCE, Rust, Python)..." class="key-input" style="padding-left: 36px; width: 100%;">
                         </div>
                         <div class="filter-chips-wrapper" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;">
-                            <button class="chip-btn active" data-cat="all">Tutti (12)</button>
-                            <button class="chip-btn" data-cat="prompt_inj">Prompt Injection</button>
-                            <button class="chip-btn" data-cat="rag_sec">RAG & Vector</button>
-                            <button class="chip-btn" data-cat="agent_rce">Agentic RCE</button>
-                            <button class="chip-btn" data-cat="ssrf_cloud">SSRF Cloud</button>
-                            <button class="chip-btn" data-cat="redteam">Red-Teaming</button>
-                            <button class="chip-btn" data-cat="blueprints">Blueprints Codice</button>
+                            <button class="chip-btn active" data-cat="all" onclick="filterEncCategory('all', this)">Tutti (12)</button>
+                            <button class="chip-btn" data-cat="prompt_inj" onclick="filterEncCategory('prompt_inj', this)">Prompt Injection</button>
+                            <button class="chip-btn" data-cat="rag_sec" onclick="filterEncCategory('rag_sec', this)">RAG & Vector</button>
+                            <button class="chip-btn" data-cat="agent_rce" onclick="filterEncCategory('agent_rce', this)">Agentic RCE</button>
+                            <button class="chip-btn" data-cat="ssrf_cloud" onclick="filterEncCategory('ssrf_cloud', this)">SSRF Cloud</button>
+                            <button class="chip-btn" data-cat="redteam" onclick="filterEncCategory('redteam', this)">Red-Teaming</button>
+                            <button class="chip-btn" data-cat="blueprints" onclick="filterEncCategory('blueprints', this)">Blueprints Codice</button>
                         </div>
                     </div>
 
                     <div class="enc-split-view" style="display: grid; grid-template-columns: 320px 1fr; gap: 16px; min-height: 500px;">
                         <div class="enc-index-list" id="enc-index-list" style="overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px;">
-                            <div class="enc-card active" onclick="selectEncArticle('llm01', this)">
+                            <div class="enc-card active" data-cat="prompt_inj" onclick="selectEncArticle('llm01', this)">
                                 <span>OWASP LLM01</span>
                                 <strong>Direct & Indirect Prompt Injection</strong>
                                 <p>Override semantico delle istruzioni di sistema e manipolazione del contesto via documenti RAG.</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm02', this)">
+                            <div class="enc-card" data-cat="ssrf_cloud" onclick="selectEncArticle('llm02', this)">
                                 <span>OWASP LLM02</span>
                                 <strong>Sensitive Info Disclosure & Cloud SSRF</strong>
                                 <p>Fuga di credenziali, chiavi IAM AWS/GCP (169.254.169.254) ed inclusione file locali.</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm03', this)">
+                            <div class="enc-card" data-cat="supply_chain" onclick="selectEncArticle('llm03', this)">
                                 <span>OWASP LLM03</span>
                                 <strong>Supply Chain & Data Poisoning</strong>
                                 <p>Inquinamento dei dataset di addestramento, trojan nei pesi dei modelli e backdoor.</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm04', this)">
+                            <div class="enc-card" data-cat="prompt_inj" onclick="selectEncArticle('llm04', this)">
                                 <span>OWASP LLM04</span>
                                 <strong>Model DoS & Resource Exhaustion</strong>
                                 <p>Cicli ricorsivi infiniti e stuffing del contesto per prosciugare il budget API.</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm05', this)">
+                            <div class="enc-card" data-cat="output_sec" onclick="selectEncArticle('llm05', this)">
                                 <span>OWASP LLM05</span>
                                 <strong>Insecure Output Handling</strong>
                                 <p>Trust cieco negli output del modello che genera XSS, SQLi ed RCE nel backend.</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm06', this)">
+                            <div class="enc-card" data-cat="agent_rce" onclick="selectEncArticle('llm06', this)">
                                 <span>OWASP LLM06</span>
                                 <strong>Excessive Agency</strong>
                                 <p>Autonomia eccessiva concessa ad agenti IA senza controllo umano (HITL).</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm07', this)">
+                            <div class="enc-card" data-cat="prompt_inj" onclick="selectEncArticle('llm07', this)">
                                 <span>OWASP LLM07</span>
                                 <strong>System Prompt Extraction</strong>
                                 <p>Sonde per esfiltrare il prompt di sistema riservato e le regole aziendali.</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm08', this)">
+                            <div class="enc-card" data-cat="agent_rce" onclick="selectEncArticle('llm08', this)">
                                 <span>OWASP LLM08</span>
                                 <strong>Agentic Tool Hijack (RCE)</strong>
                                 <p>Invocazione malevola di comandi shell (rm -rf, subprocess, curl|sh) negli agenti.</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm09', this)">
+                            <div class="enc-card" data-cat="supply_chain" onclick="selectEncArticle('llm09', this)">
                                 <span>OWASP LLM09</span>
                                 <strong>Slopsquatting & Package Typosquatting</strong>
                                 <p>Fiducia cieca nel codice generato dall'IA che importa librerie malware inesistenti.</p>
                             </div>
-                            <div class="enc-card" onclick="selectEncArticle('llm10', this)">
+                            <div class="enc-card" data-cat="redteam" onclick="selectEncArticle('llm10', this)">
                                 <span>OWASP LLM10</span>
                                 <strong>Model Theft</strong>
                                 <p>Esfiltrazione dei pesi proprietari del modello e reverse engineering.</p>
@@ -855,7 +855,36 @@ const messages = [
                 consoleEl.prepend(line);
             }
         }
-        window.runSimSsrf = runSimSsrf;
+        function filterEncCategory(cat, el) {
+            if (el) {
+                document.querySelectorAll('.chip-btn').forEach(function(b) { b.classList.remove('active'); });
+                el.classList.add('active');
+            }
+            var cards = document.querySelectorAll('.enc-card');
+            cards.forEach(function(card) {
+                var cardCat = card.getAttribute('data-cat');
+                if (cat === 'all' || cardCat === cat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        window.filterEncCategory = filterEncCategory;
+
+        function searchEncArticles(query) {
+            query = (query || '').toLowerCase().trim();
+            var cards = document.querySelectorAll('.enc-card');
+            cards.forEach(function(card) {
+                var text = card.textContent.toLowerCase();
+                if (query === '' || text.indexOf(query) !== -1) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        window.searchEncArticles = searchEncArticles;
 
         window.selectEncArticle = selectEncArticle;
         window.switchTab = switchTab;
