@@ -1,0 +1,7 @@
+target/*
+src-tauri/*
+.git/*
+.agents/*
+*.lock
+*.exe
+*.dll

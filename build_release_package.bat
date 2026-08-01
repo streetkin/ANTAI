@@ -21,8 +21,16 @@ if %errorlevel% neq 0 (
 echo [2/3] Copia eseguibile nativo antai-core.exe...
 copy /Y "target\release\antai-core.exe" "..\antai-core.exe"
 
+echo [3/4] Preparazione cartella dist per l'App Desktop Nativa...
+if not exist "..\dist" mkdir "..\dist"
+copy /Y "..\index.html" "..\dist\"
+copy /Y "..\app.js" "..\dist\"
+copy /Y "..\styles.css" "..\dist\"
+copy /Y "..\antai_logo.png" "..\dist\"
+xcopy /E /I /Y "..\sdk" "..\dist\sdk"
+
 cd /d "%~dp0src-tauri"
-echo [3/3] Compilazione ANTAI Desktop App (.exe nativo Tauri UI)...
+echo [4/4] Compilazione ANTAI Desktop App (.exe nativo Tauri UI)...
 cargo build --release
 if %errorlevel% neq 0 (
     echo [ERRORE] Compilazione dell'App Desktop fallita.
