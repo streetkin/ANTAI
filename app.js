@@ -60,11 +60,12 @@ window.switchTab = function(targetTab) {
     });
 
     panes.forEach(p => {
-        p.removeAttribute('style');
         if (p.id === `tab-${targetTab}`) {
             p.classList.add('active');
+            p.style.display = 'flex';
         } else {
             p.classList.remove('active');
+            p.style.display = 'none';
         }
     });
 

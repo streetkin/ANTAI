@@ -596,7 +596,43 @@ const messages = [
     <!-- Toast Notifications Container -->
     <div id="toast-container"></div>
 
-    <!-- App Logic -->
+    <!-- Inline Routing Engine (Instant Zero-Dependency Navigation) -->
+    <script>
+        function switchTab(tabId) {
+            if (!tabId) return;
+            console.log('[ANTAI INLINE NAV] Switching to tab:', tabId);
+            
+            var navBtns = document.querySelectorAll('.nav-item');
+            navBtns.forEach(function(btn) {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            var panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(function(pane) {
+                if (pane.id === 'tab-' + tabId) {
+                    pane.classList.add('active');
+                    pane.style.display = 'flex';
+                } else {
+                    pane.classList.remove('active');
+                    pane.style.display = 'none';
+                }
+            });
+
+            if (window.tabMeta && window.tabMeta[tabId]) {
+                var meta = window.tabMeta[tabId];
+                var pageTitle = document.getElementById('page-title');
+                var pageSubtitle = document.getElementById('page-subtitle');
+                var lang = window.currentLang || 'it';
+                if (pageTitle) pageTitle.textContent = meta.title[lang] || meta.title['it'];
+                if (pageSubtitle) pageSubtitle.textContent = meta.subtitle[lang] || meta.subtitle['it'];
+            }
+        }
+        window.switchTab = switchTab;
+    </script>
     <script src="app.js"></script>
 </body>
 </html>

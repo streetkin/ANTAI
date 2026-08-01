@@ -399,7 +399,7 @@ html, body {
 
 /* Tab Panes Container */
 .tab-pane {
-    display: none !important;
+    display: none;
     flex: 1;
     padding: 24px 32px;
     overflow-y: auto;
@@ -407,8 +407,8 @@ html, body {
 }
 
 .tab-pane.active {
-    display: flex !important;
-    flex-direction: column !important;
+    display: flex;
+    flex-direction: column;
     gap: 24px;
     width: 100%;
 }
