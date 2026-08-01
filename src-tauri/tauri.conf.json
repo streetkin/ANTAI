@@ -4,8 +4,7 @@
   "version": "1.0.0",
   "identifier": "dev.antai.sentinel",
   "build": {
-    "frontendDist": "../",
-    "devUrl": "../index.html"
+    "frontendDist": "../"
   },
   "app": {
     "withGlobalTauri": true,
