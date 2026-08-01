@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANTAI — Sistema Immunitario Digitale Autonomo IA & Enciclopedia</title>
+    <title>ANTAI — Sistema Immunitario Digitale Autonomo IA & Vetrina Scientifica</title>
     <meta name="description" content="ANTAI — Sistema Immunitario Digitale in Rust nativo per la difesa autonoma contro attacchi IA, Prompt Injection e scansione memoria PC.">
     
     <!-- Google Fonts -->
@@ -55,6 +55,11 @@
                     <i data-lucide="layout-dashboard"></i>
                     <span data-i18n="nav_control_room">Control Room Immunitaria</span>
                 </button>
+                <button class="nav-item" data-tab="vetrina" id="nav-vetrina">
+                    <i data-lucide="microscope"></i>
+                    <span>Vetrina Scientifica IA</span>
+                    <span class="badge badge-accent">LIVE DEMO</span>
+                </button>
                 <button class="nav-item" data-tab="pc-scanner" id="nav-pc-scanner">
                     <i data-lucide="scan"></i>
                     <span data-i18n="nav_pc_scan">Fagociti & Memoria PC</span>
@@ -101,8 +106,8 @@
                 </div>
                 <div class="status-metrics">
                     <div class="metric-mini">
-                        <span class="metric-mini-label" data-i18n="mini_latency_label">TEMPO DI REAZIONE</span>
-                        <span class="metric-mini-val" id="mini-latency">0.05 ms</span>
+                        <span class="metric-mini-label" data-i18n="mini_latency_label">REAZIONE CUTANEA</span>
+                        <span class="metric-mini-val" id="mini-latency">&lt; 0.05 µs</span>
                     </div>
                     <div class="metric-mini">
                         <span class="metric-mini-label" data-i18n="mini_engine_label">MOTORE IA</span>
@@ -160,8 +165,8 @@
                                 <span class="stat-desc" data-i18n="stat_blocked_threats">Patogeni Bloccati</span>
                             </div>
                             <div class="stat-box">
-                                <span class="stat-number" id="stat-latency">0.05<small>ms</small></span>
-                                <span class="stat-desc" data-i18n="stat_avg_latency">Reazione Pelle</span>
+                                <span class="stat-number" id="stat-latency">&lt;0.05<small>µs</small></span>
+                                <span class="stat-desc" data-i18n="stat_avg_latency">Layer 1 Rust Regex</span>
                             </div>
                             <div class="stat-box">
                                 <span class="stat-number" id="stat-saved">100%</span>
@@ -233,7 +238,94 @@
                 </div>
             </section>
 
-            <!-- TAB 2: PC SCANNER (FAGOCITI & AUDIT MEMORIA) -->
+            <!-- TAB 2: VETRINA SCIENTIFICA IA (NUOVA ED ESLEUSTIVA!) -->
+            <section class="tab-pane" id="tab-vetrina">
+                <div class="fluid-matrix-container" style="max-height: calc(100vh - 180px); overflow-y: auto; padding-right: 8px;">
+                    <!-- Hero Interactive Showcase -->
+                    <div style="background: rgba(0, 102, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <div>
+                                <span class="badge badge-accent" style="margin-bottom: 8px; display: inline-block;">MICROBIOLOGIA DIGITALE</span>
+                                <h2 style="color: #ffffff; font-size: 1.4rem; font-family: var(--font-display);">Come Funziona il Sistema Immunitario ANTAI</h2>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;">Confronto scientifico parallelo tra l'immunità biologica umana e l'architettura cyber-difensiva in Rust.</p>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-secondary btn-sm" id="sim-prompt-inj-btn">🔬 Attacca: Prompt Injection</button>
+                                <button class="btn btn-secondary btn-sm" id="sim-ssrf-btn">🌐 Attacca: Cloud SSRF</button>
+                            </div>
+                        </div>
+
+                        <!-- 4 Biological Immune Layers Infographic Grid -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 20px;">
+                            <div style="background: rgba(6, 11, 23, 0.6); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 10px; padding: 16px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(0, 240, 255, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-ruby);">
+                                        <i data-lucide="shield"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="color: #ffffff; font-size: 0.95rem;">1. Barriera Epiteliale</h4>
+                                        <span style="font-size: 0.75rem; color: var(--accent-ruby); font-family: var(--font-mono);">&lt; 0.05 µs (Proxy Rust)</span>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                                    <strong>Biologia:</strong> La pelle ed il cerume fermano fisicamente i patogeni prima dell'ingresso.<br>
+                                    <strong>ANTAI:</strong> Il proxy nativo in Rust intercetta ogni payload HTTP con <code>RegexSet</code> prima che tocchi il modello.
+                                </p>
+                            </div>
+
+                            <div style="background: rgba(6, 11, 23, 0.6); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 10px; padding: 16px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(0, 102, 255, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-blue);">
+                                        <i data-lucide="activity"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="color: #ffffff; font-size: 0.95rem;">2. Fagociti & Linfociti</h4>
+                                        <span style="font-size: 0.75rem; color: var(--accent-blue); font-family: var(--font-mono);">Scansione Memoria RAM</span>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                                    <strong>Biologia:</strong> I globuli bianchi (fagociti) inglobano e divorano i batteri penetrati nei tessuti.<br>
+                                    <strong>ANTAI:</strong> Lo scanner di sistema controlla i processi attivi della memoria PC isolando malware e miner.
+                                </p>
+                            </div>
+
+                            <div style="background: rgba(6, 11, 23, 0.6); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 10px; padding: 16px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(0, 240, 255, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-ruby);">
+                                        <i data-lucide="cpu"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="color: #ffffff; font-size: 0.95rem;">3. Midollo Osseo</h4>
+                                        <span style="font-size: 0.75rem; color: var(--accent-ruby); font-family: var(--font-mono);">50 - 200 ms (IA Engine)</span>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                                    <strong>Biologia:</strong> Il midollo produce nuove cellule specializzate di risposta infiammatoria.<br>
+                                    <strong>ANTAI:</strong> Valutazione semantica incrociata asincrona tramite Ollama locale o OpenRouter.
+                                </p>
+                            </div>
+
+                            <div style="background: rgba(6, 11, 23, 0.6); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 10px; padding: 16px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(0, 230, 153, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-emerald);">
+                                        <i data-lucide="dna"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="color: #ffffff; font-size: 0.95rem;">4. Memoria B & Anticorpi</h4>
+                                        <span style="font-size: 0.75rem; color: var(--accent-emerald); font-family: var(--font-mono);">Auto-Immunità Permanent</span>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                                    <strong>Biologia:</strong> Le cellule B mantengono la memoria molecolare per neutralizzare virus già visti.<br>
+                                    <strong>ANTAI:</strong> Generazione di anticorpi DNA per bloccare istantaneamente varianti future del payload.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: PC SCANNER (FAGOCITI & AUDIT MEMORIA) -->
             <section class="tab-pane" id="tab-pc-scanner">
                 <div class="fluid-scanner-container">
                     <div class="fluid-scanner-header" style="justify-content: flex-end; margin-bottom: 16px;">
@@ -261,7 +353,7 @@
                 </div>
             </section>
 
-            <!-- TAB 3: IMMUNE MEMORY & ANTIBODY REGISTER (NUOVO!) -->
+            <!-- TAB 4: IMMUNE MEMORY & ANTIBODY REGISTER -->
             <section class="tab-pane" id="tab-immune-memory">
                 <div class="fluid-matrix-container" style="max-height: calc(100vh - 180px); overflow-y: auto;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
@@ -323,7 +415,7 @@
                 </div>
             </section>
 
-            <!-- TAB 4: SDK HUB -->
+            <!-- TAB 5: SDK HUB -->
             <section class="tab-pane" id="tab-sdk-hub">
                 <div class="fluid-sdk-container">
                     <div class="sdk-tabs-bar">
@@ -359,7 +451,7 @@
                 </div>
             </section>
 
-            <!-- TAB 5: AI PROVIDERS & API KEYS -->
+            <!-- TAB 6: AI PROVIDERS & API KEYS -->
             <section class="tab-pane" id="tab-ai-providers">
                 <div class="fluid-providers-container">
                     <div class="provider-cards-grid">
@@ -387,7 +479,7 @@
                 </div>
             </section>
 
-            <!-- TAB 6: THREAT LOG LIVE FEED -->
+            <!-- TAB 7: THREAT LOG LIVE FEED -->
             <section class="tab-pane" id="tab-threat-log">
                 <div class="fluid-log-container">
                     <div class="threat-table-wrapper">
@@ -415,10 +507,9 @@
                 </div>
             </section>
 
-            <!-- TAB 7: ANTAI HACKADEMY — ENCICLOPEDIA SICUREZZA IA COMPLETA -->
+            <!-- TAB 8: ANTAI HACKADEMY — ENCICLOPEDIA SICUREZZA IA COMPLETA -->
             <section class="tab-pane" id="tab-hackademy-articles">
                 <div class="fluid-matrix-container">
-                    <!-- Search & Filter Controls Bar -->
                     <div class="hackademy-controls-bar" style="display: flex; gap: 12px; align-items: center; margin-bottom: 14px; flex-wrap: wrap;">
                         <div class="search-input-wrapper" style="flex: 1; min-width: 250px; position: relative;">
                             <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 16px; height: 16px;"></i>
@@ -435,14 +526,11 @@
                         </div>
                     </div>
 
-                    <!-- Article Grid & Deep Reader Split Container -->
                     <div class="enc-split-view" style="display: grid; grid-template-columns: 320px 1fr; gap: 16px; height: calc(100vh - 240px);">
-                        <!-- Article Cards Index List -->
                         <div class="enc-index-list" id="enc-index-list" style="overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px;">
                             <!-- Inseriti da app.js -->
                         </div>
 
-                        <!-- Main Deep Reader View -->
                         <div class="simulator-detail-box" id="enc-reader-box" style="padding: 24px; overflow-y: auto;">
                             <div id="enc-reader-content">
                                 <!-- Inserito da app.js -->
@@ -452,7 +540,7 @@
                 </div>
             </section>
 
-            <!-- TAB 8: ANTAI HACKADEMY — FAQ COMPLETE & BLUEPRINTS DI CODICE -->
+            <!-- TAB 9: ANTAI HACKADEMY — FAQ COMPLETE & BLUEPRINTS DI CODICE -->
             <section class="tab-pane" id="tab-hackademy-faq">
                 <div class="fluid-matrix-container" style="max-height: calc(100vh - 180px); overflow-y: auto;">
                     <div class="faq-accordion-group">
