@@ -630,6 +630,10 @@ const messages = [
                 if (pageTitle) pageTitle.textContent = meta.title[lang] || meta.title['it'];
                 if (pageSubtitle) pageSubtitle.textContent = meta.subtitle[lang] || meta.subtitle['it'];
             }
+
+            if (tabId === 'hackademy-articles' && typeof window.renderEncIndex === 'function') {
+                window.renderEncIndex();
+            }
         }
         window.switchTab = switchTab;
     </script>

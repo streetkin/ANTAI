@@ -76,8 +76,14 @@ window.switchTab = function(targetTab) {
 
     if (tabMeta[targetTab]) {
         const meta = tabMeta[targetTab];
-        if (pageTitle) pageTitle.textContent = meta.title[lang] || meta.title['it'];
-        if (pageSubtitle) pageSubtitle.textContent = meta.subtitle[lang] || meta.subtitle['it'];
+        if (meta && meta.title) {
+            if (pageTitle) pageTitle.textContent = meta.title[lang] || meta.title['it'];
+            if (pageSubtitle) pageSubtitle.textContent = meta.subtitle[lang] || meta.subtitle['it'];
+        }
+    }
+
+    if (targetTab === 'hackademy-articles' && typeof window.renderEncIndex === 'function') {
+        window.renderEncIndex();
     }
 };
 
@@ -621,6 +627,7 @@ pub async fn inspect_and_forward(req_payload: &str) -> Result<String, SecurityEr
             encReaderContent.innerHTML = firstContent;
         }
     }
+    window.renderEncIndex = renderEncIndex;
 
     // 4. LANGUAGE SWITCHER FUNCTION
     function setLanguage(lang) {
@@ -703,7 +710,14 @@ pub async fn inspect_and_forward(req_payload: &str) -> Result<String, SecurityEr
     });
 
     // 6. ENCYCLOPEDIA CHIP FILTERS & SEARCH LISTENERS
-    // (chip-btn filter removed — no chip elements in current HTML)
+    document.querySelectorAll('.chip-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-cat') || 'all';
+            renderEncIndex();
+        });
+    });
 
     if (encSearchInput) {
         encSearchInput.addEventListener('input', (e) => {
