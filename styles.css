@@ -861,6 +861,57 @@ html, body {
     height: 18px;
 }
 
+/* Chip Filter Buttons */
+.chip-btn {
+    background: var(--bg-main);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.chip-btn:hover, .chip-btn.active {
+    background: var(--primary-blue-light);
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+/* Detail Reader Box */
+.simulator-detail-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+/* DNA Badge */
+.dna-badge {
+    background: var(--primary-blue-light);
+    color: var(--primary-blue);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.decoy-item, .antibody-item {
+    padding: 10px 14px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
 /* Scrollbars */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }

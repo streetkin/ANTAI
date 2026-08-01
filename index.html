@@ -238,16 +238,16 @@
                 </div>
             </section>
 
-            <!-- TAB 2: VETRINA SCIENTIFICA IA (NUOVA ED ESLEUSTIVA!) -->
+            <!-- TAB 2: VETRINA SCIENTIFICA IA -->
             <section class="tab-pane" id="tab-vetrina">
-                <div class="fluid-matrix-container" style="max-height: calc(100vh - 180px); overflow-y: auto; padding-right: 8px;">
+                <div class="fluid-matrix-container">
                     <!-- Hero Interactive Showcase -->
-                    <div style="background: rgba(0, 102, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div class="grid-section" style="margin-bottom: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
                             <div>
                                 <span class="badge badge-accent" style="margin-bottom: 8px; display: inline-block;">MICROBIOLOGIA DIGITALE</span>
-                                <h2 style="color: #ffffff; font-size: 1.4rem; font-family: var(--font-display);">Come Funziona il Sistema Immunitario ANTAI</h2>
-                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;">Confronto scientifico parallelo tra l'immunità biologica umana e l'architettura cyber-difensiva in Rust.</p>
+                                <h2 style="color: var(--text-primary); font-size: 1.3rem; font-family: var(--font-heading); font-weight: 800;">Come Funziona il Sistema Immunitario ANTAI</h2>
+                                <p style="color: var(--text-secondary); font-size: 0.86rem; margin-top: 4px;">Confronto scientifico parallelo tra l'immunità biologica umana e l'architettura cyber-difensiva in Rust.</p>
                             </div>
                             <div style="display: flex; gap: 8px;">
                                 <button class="btn btn-secondary btn-sm" id="sim-prompt-inj-btn">🔬 Attacca: Prompt Injection</button>
@@ -256,15 +256,15 @@
                         </div>
 
                         <!-- 4 Biological Immune Layers Infographic Grid -->
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 20px;">
-                            <div style="background: rgba(6, 11, 23, 0.6); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 10px; padding: 16px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 16px;">
+                            <div style="background: var(--bg-main); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 18px;">
                                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                    <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(0, 240, 255, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-ruby);">
+                                    <div style="width: 34px; height: 34px; border-radius: 8px; background: var(--primary-blue-light); display: flex; align-items: center; justify-content: center; color: var(--primary-blue);">
                                         <i data-lucide="shield"></i>
                                     </div>
                                     <div>
-                                        <h4 style="color: #ffffff; font-size: 0.95rem;">1. Barriera Epiteliale</h4>
-                                        <span style="font-size: 0.75rem; color: var(--accent-ruby); font-family: var(--font-mono);">&lt; 0.05 µs (Proxy Rust)</span>
+                                        <h4 style="color: var(--text-primary); font-size: 0.95rem; font-weight: 700;">1. Barriera Epiteliale</h4>
+                                        <span style="font-size: 0.72rem; color: var(--primary-blue); font-family: var(--font-mono); font-weight: 600;">&lt; 0.05 µs (Proxy Rust)</span>
                                     </div>
                                 </div>
                                 <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
@@ -273,14 +273,14 @@
                                 </p>
                             </div>
 
-                            <div style="background: rgba(6, 11, 23, 0.6); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 10px; padding: 16px;">
+                            <div style="background: var(--bg-main); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 18px;">
                                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                    <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(0, 102, 255, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-blue);">
+                                    <div style="width: 34px; height: 34px; border-radius: 8px; background: var(--primary-blue-light); display: flex; align-items: center; justify-content: center; color: var(--primary-blue);">
                                         <i data-lucide="activity"></i>
                                     </div>
                                     <div>
-                                        <h4 style="color: #ffffff; font-size: 0.95rem;">2. Fagociti & Linfociti</h4>
-                                        <span style="font-size: 0.75rem; color: var(--accent-blue); font-family: var(--font-mono);">Scansione Memoria RAM</span>
+                                        <h4 style="color: var(--text-primary); font-size: 0.95rem; font-weight: 700;">2. Fagociti & Linfociti</h4>
+                                        <span style="font-size: 0.72rem; color: var(--primary-blue); font-family: var(--font-mono); font-weight: 600;">Scansione Memoria RAM</span>
                                     </div>
                                 </div>
                                 <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
@@ -289,14 +289,14 @@
                                 </p>
                             </div>
 
-                            <div style="background: rgba(6, 11, 23, 0.6); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 10px; padding: 16px;">
+                            <div style="background: var(--bg-main); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 18px;">
                                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                    <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(0, 240, 255, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-ruby);">
+                                    <div style="width: 34px; height: 34px; border-radius: 8px; background: var(--primary-blue-light); display: flex; align-items: center; justify-content: center; color: var(--primary-blue);">
                                         <i data-lucide="cpu"></i>
                                     </div>
                                     <div>
-                                        <h4 style="color: #ffffff; font-size: 0.95rem;">3. Midollo Osseo</h4>
-                                        <span style="font-size: 0.75rem; color: var(--accent-ruby); font-family: var(--font-mono);">50 - 200 ms (IA Engine)</span>
+                                        <h4 style="color: var(--text-primary); font-size: 0.95rem; font-weight: 700;">3. Midollo Osseo</h4>
+                                        <span style="font-size: 0.72rem; color: var(--primary-blue); font-family: var(--font-mono); font-weight: 600;">50 - 200 ms (IA Engine)</span>
                                     </div>
                                 </div>
                                 <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
@@ -305,14 +305,14 @@
                                 </p>
                             </div>
 
-                            <div style="background: rgba(6, 11, 23, 0.6); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 10px; padding: 16px;">
+                            <div style="background: var(--bg-main); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 18px;">
                                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                    <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(0, 230, 153, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-emerald);">
+                                    <div style="width: 34px; height: 34px; border-radius: 8px; background: var(--accent-green-light); display: flex; align-items: center; justify-content: center; color: var(--accent-green);">
                                         <i data-lucide="dna"></i>
                                     </div>
                                     <div>
-                                        <h4 style="color: #ffffff; font-size: 0.95rem;">4. Memoria B & Anticorpi</h4>
-                                        <span style="font-size: 0.75rem; color: var(--accent-emerald); font-family: var(--font-mono);">Auto-Immunità Permanent</span>
+                                        <h4 style="color: var(--text-primary); font-size: 0.95rem; font-weight: 700;">4. Memoria B & Anticorpi</h4>
+                                        <span style="font-size: 0.72rem; color: var(--accent-green); font-family: var(--font-mono); font-weight: 600;">Auto-Immunità Permanente</span>
                                     </div>
                                 </div>
                                 <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
@@ -358,7 +358,7 @@
                 <div class="fluid-matrix-container" style="max-height: calc(100vh - 180px); overflow-y: auto;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                         <div>
-                            <h3 style="color: #ffffff; font-size: 1.1rem;">🧬 Registro Memoria Immunologica & Anticorpi</h3>
+                            <h3 style="color: var(--text-primary); font-size: 1.15rem; font-family: var(--font-heading); font-weight: 800;">🧬 Registro Memoria Immunologica & Anticorpi</h3>
                             <p style="color: var(--text-secondary); font-size: 0.85rem;">Anticorpi molecolari compilati in Rust per neutralizzare patogeni ed iniezioni semantiche.</p>
                         </div>
                         <span class="badge badge-accent">36 ANTICORPI ATTIVI</span>
