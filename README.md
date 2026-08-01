@@ -54,8 +54,8 @@ ANTAI è strutturato come un vero software di sicurezza professionale a doppio l
 ┌──────────────────────────────────────────┐    ┌─────────────────────────────┐
 │ ⚡ ANTAI RUST CORE ENGINE (Background)    │    │ 💻 ANTAI DESKTOP GUI        │
 ├──────────────────────────────────────────┤    ├─────────────────────────────┤
-│ • Porta 8090: Interception Proxy         │    │ • Finestra Nativa (Tauri)   │
-│ • Porta 8091: REST Bridge API            │ ◄─►│ • Control Room & Telemetria │
+│ • Local Proxy (127.0.0.1 Loopback)       │    │ • Finestra Nativa (Tauri)   │
+│ • Secure REST Bridge API (Configurable)  │ ◄─►│ • Control Room & Telemetria │
 │ • Intercettazione < 0.05µs ($0 Costi)    │    │ • Nessun browser richiesto  │
 │ • Deception Sandbox & Audit RAM          │    │ • Icona hi-res nella barra  │
 └──────────────────────────────────────────┘    └─────────────────────────────┘
@@ -132,9 +132,9 @@ Nel tab **Integrazione SDK / App** trovi i blueprint pronti da copiare per integ
 ```javascript
 import { Antai } from './sdk/antai-sdk.js';
 
-// Inizializza l'intercettatore locale
+// Inizializza l'intercettatore locale (127.0.0.1 Loopback)
 const sentinel = new Antai({
-    endpoint: 'http://localhost:8090/intercept',
+    endpoint: 'http://127.0.0.1:ANTAI_PORT/intercept',
     failOpen: true
 });
 
