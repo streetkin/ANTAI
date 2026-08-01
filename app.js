@@ -1,4 +1,94 @@
-/* ANTAI CONTAINER-LESS FLUID IMPERIAL — ENTERPRISE ENGINE (v1.0 RELEASE) */
+// GLOBAL TAB ROUTING ENGINE
+window.tabMeta = {
+    'overview': {
+        title: { it: 'Control Room Imperiale', en: 'Imperial Control Room' },
+        subtitle: { it: 'Monitoraggio in tempo reale e protezione autonoma contro attacchi IA', en: 'Real-time autonomous defense against AI-driven cyber exploits & prompt injections' }
+    },
+    'vetrina': {
+        title: { it: 'Vetrina ANTAI — Il Sistema Immunitario Digitale per l\'IA', en: 'ANTAI Showcase — The Digital Immune System for AI' },
+        subtitle: { it: 'Presentazione completa dell\'architettura di difesa autonoma, isolamento Beelzebub e simulazione viva', en: 'Complete showcase of autonomous immune defense architecture, Beelzebub deception, and live simulation' }
+    },
+    'immune-deception': {
+        title: { it: 'Immune System & Beelzebub Deception Core', en: 'Digital Immune System & Beelzebub Deception' },
+        subtitle: { it: 'Gestione Honeypot Beelzebub, MCP Decoys, Contrattacco Cognitivo e Memoria Immunitaria', en: 'Beelzebub Honeypots, MCP Decoys, Cognitive Counterattacks, and Immune Memory' }
+    },
+    'pc-scanner': {
+        title: { it: 'Fagociti & Scansione Memoria PC', en: 'Phagocytes & PC Memory Inspection' },
+        subtitle: { it: 'Analisi profonda della memoria RAM, dei processi attivi e rimozione patogeni', en: 'Deep RAM inspection, active process auditing, and pathogen removal' }
+    },
+    'immune-memory': {
+        title: { it: 'Registro Memoria Immunologica & Anticorpi', en: 'Immunological Memory & Antibody Register' },
+        subtitle: { it: 'Anticorpi molecolari ed impronte euristiche precompilate in Rust per neutralizzazione istantanea', en: 'Molecular antibodies and precompiled Rust heuristic signatures for instant neutralization' }
+    },
+    'sdk-hub': {
+        title: { it: 'Hub Integrazione SDK / App', en: 'SDK & Application Protection Hub' },
+        subtitle: { it: 'Proteggi Lovable, Bolt.new, React, Next.js e Vercel con una riga di codice', en: 'Protect Lovable, Bolt.new, React, Next.js, and Vercel with 1 line of code' }
+    },
+    'ai-providers': {
+        title: { it: 'Modelli IA & Gestione Chiavi API', en: 'AI Models & API Provider Management' },
+        subtitle: { it: 'Configura il motore locale Ollama a costo zero oppure collega OpenRouter e Groq', en: 'Zero-cost local Ollama engine or OpenRouter / Groq cross-model configuration' }
+    },
+    'threat-log': {
+        title: { it: 'Registro Minacce Intercettate Live', en: 'Live Intercepted Threat Register' },
+        subtitle: { it: 'Storico cronologico dettagliato di tutti i vettori di attacco bloccati dal motore Rust', en: 'Detailed chronological audit log of all intercepted attack vectors' }
+    },
+    'hackademy-articles': {
+        title: { it: 'ANTAI Hackademy — Enciclopedia Sicurezza IA', en: 'ANTAI Hackademy — AI Security Encyclopedia' },
+        subtitle: { it: 'Enciclopedia completa delle minacce OWASP LLM 2026, formulazioni di difesa e codici', en: 'Comprehensive OWASP LLM 2026 threats encyclopedia, defense formulations and code' }
+    },
+    'hackademy-faq': {
+        title: { it: 'ANTAI Hackademy — FAQ & Blueprints Codice', en: 'ANTAI Hackademy — FAQ & Code Blueprints' },
+        subtitle: { it: 'Domande frequenti, blueprint di codice in Rust/TS/Python e strategie di mitigazione', en: 'Frequently asked questions, Rust/TS/Python code blueprints, and mitigation strategies' }
+    }
+};
+
+window.currentLang = 'it';
+
+window.switchTab = function(targetTab) {
+    if (!targetTab) return;
+    console.log('[ANTAI NAV] Switching to tab:', targetTab);
+
+    const navBtns = document.querySelectorAll('.nav-item');
+    const panes = document.querySelectorAll('.tab-pane');
+
+    navBtns.forEach(n => {
+        if (n.getAttribute('data-tab') === targetTab) {
+            n.classList.add('active');
+        } else {
+            n.classList.remove('active');
+        }
+    });
+
+    panes.forEach(p => {
+        if (p.id === `tab-${targetTab}`) {
+            p.classList.add('active');
+            p.style.display = 'flex';
+        } else {
+            p.classList.remove('active');
+            p.style.display = 'none';
+        }
+    });
+
+    const pageTitle = document.getElementById('page-title');
+    const pageSubtitle = document.getElementById('page-subtitle');
+    const lang = window.currentLang || 'it';
+    const tabMeta = window.tabMeta || {};
+
+    if (tabMeta[targetTab]) {
+        const meta = tabMeta[targetTab];
+        if (pageTitle) pageTitle.textContent = meta.title[lang] || meta.title['it'];
+        if (pageSubtitle) pageSubtitle.textContent = meta.subtitle[lang] || meta.subtitle['it'];
+    }
+};
+
+document.addEventListener('click', (e) => {
+    const navBtn = e.target.closest('.nav-item[data-tab]');
+    if (navBtn) {
+        e.preventDefault();
+        const targetTab = navBtn.getAttribute('data-tab');
+        window.switchTab(targetTab);
+    }
+});
 
 function initApp() {
     if (window.lucide && typeof lucide.createIcons === 'function') {

@@ -165,13 +165,14 @@ html, body {
 
 .nav-item:hover {
     color: var(--primary-blue);
-    background: var(--primary-blue-light);
+    background: var(--bg-subtle);
 }
 
 .nav-item.active {
     color: var(--primary-blue);
     font-weight: 700;
     background: var(--primary-blue-light);
+    border-left: 3px solid var(--primary-blue);
 }
 
 .nav-item i, .nav-item svg {
