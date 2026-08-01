@@ -900,16 +900,17 @@ html, body {
     border-radius: 4px;
 }
 
-.decoy-item, .antibody-item {
-    padding: 10px 14px;
-    background: var(--bg-main);
+.decoy-item, .antibody-item, .scan-result-item {
+    padding: 14px 18px;
+    background: var(--bg-surface);
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-sm);
 }
 
 /* Scrollbars */

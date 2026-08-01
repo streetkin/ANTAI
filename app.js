@@ -244,7 +244,7 @@ function initApp() {
             desc: 'Override semantico delle istruzioni di sistema e manipolazione del contesto via documenti RAG.',
             desc_en: 'Semantic override of system instructions and context manipulation via RAG documents.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">🔴 OWASP LLM01: Direct & Indirect Prompt Injection</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">🔴 OWASP LLM01: Direct & Indirect Prompt Injection</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     La Prompt Injection si verifica quando un input non fidato manipola il comportamento di un LLM inducendolo ad ignorare le regole di sistema ed a eseguire istruzioni arbitrarie definite dall'utente.
                 </p>
@@ -267,7 +267,7 @@ function initApp() {
 }</code></pre>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">🔴 OWASP LLM01: Direct & Indirect Prompt Injection</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">🔴 OWASP LLM01: Direct & Indirect Prompt Injection</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Prompt Injection occurs when untrusted user input alters the execution logic of an LLM, causing it to ignore system guardrails and execute arbitrary user instructions.
                 </p>
@@ -299,7 +299,7 @@ function initApp() {
             desc: 'Fuga di credenziali, chiavi IAM AWS/GCP (169.254.169.254) ed inclusione file locali.',
             desc_en: 'Credential leakage, AWS/GCP IAM keys (169.254.169.254) and local file inclusion.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">🔒 OWASP LLM02: Sensitive Information Disclosure & Cloud SSRF</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">🔒 OWASP LLM02: Sensitive Information Disclosure & Cloud SSRF</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Gli agenti IA dotati di strumenti di fetching o navigazione web possono essere manipolati per effettuare richieste ad indirizzi IP interni riservati dell'infrastruttura cloud.
                 </p>
@@ -313,7 +313,7 @@ function initApp() {
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">🔒 OWASP LLM02: Sensitive Information Disclosure & Cloud SSRF</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">🔒 OWASP LLM02: Sensitive Information Disclosure & Cloud SSRF</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     AI agents equipped with web fetching capabilities can be exploited to issue HTTP requests targeting private cloud infrastructure metadata services.
                 </p>
@@ -336,7 +336,7 @@ function initApp() {
             desc: 'Inquinamento dei dataset di addestramento, trojan nei pesi dei modelli e backdoor.',
             desc_en: 'Training dataset poisoning, model weights trojans and backdoors.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">☣️ OWASP LLM03: Supply Chain & Data Poisoning</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">☣️ OWASP LLM03: Supply Chain & Data Poisoning</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Questa vulnerabilità si verifica quando dataset non verificati o modelli pre-addestrati scaricati da hub aperti (es. HuggingFace) contengono backdoor o trojan semantici (Sleeper Agents).
                 </p>
@@ -346,7 +346,7 @@ function initApp() {
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">☣️ OWASP LLM03: Supply Chain & Data Poisoning</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">☣️ OWASP LLM03: Supply Chain & Data Poisoning</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Occurs when unverified training datasets or open model weights (e.g. from public model hubs) harbor semantic backdoors or malicious deserialization payloads.
                 </p>
@@ -365,13 +365,13 @@ function initApp() {
             desc: 'Cicli ricorsivi infiniti e stuffing del contesto per prosciugare il budget API.',
             desc_en: 'Infinite recursive loops and context stuffing to drain API budget.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">⚡ OWASP LLM04: Model DoS & Resource Exhaustion</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">⚡ OWASP LLM04: Model DoS & Resource Exhaustion</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Attacchi di esaurimento risorse progettati per forzare il modello a generare risposte estremamente lunghe o cicli di ragionamento ricorsivi infiniti, esaurendo il budget API cloud.
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">⚡ OWASP LLM04: Model DoS & Resource Exhaustion</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">⚡ OWASP LLM04: Model DoS & Resource Exhaustion</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Resource exhaustion attacks crafted to force the LLM into generating max-token outputs or infinite reasoning loops, causing server DoS and API budget depletion.
                 </p>
@@ -386,13 +386,13 @@ function initApp() {
             desc: 'Trust cieco negli output del modello che genera XSS, SQLi ed RCE nel backend.',
             desc_en: 'Blind trust in model outputs triggering XSS, SQLi, and backend RCE.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">⚠️ OWASP LLM05: Insecure Output Handling</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">⚠️ OWASP LLM05: Insecure Output Handling</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Fidarsi ciecamente dei dati restituiti dall'LLM senza sanificarli prima di passarli all'interfaccia utente o al database causa vulnerabilità XSS o SQL Injection secondarie.
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">⚠️ OWASP LLM05: Insecure Output Handling</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">⚠️ OWASP LLM05: Insecure Output Handling</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Failing to sanitize LLM-generated text before rendering it in web browsers or inserting it into SQL databases results in stored XSS or secondary injection flaws.
                 </p>
@@ -407,13 +407,13 @@ function initApp() {
             desc: 'Autonomia eccessiva concessa ad agenti IA senza controllo umano (HITL).',
             desc_en: 'Excessive autonomy granted to AI agents without Human-in-the-Loop (HITL).',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">⚙️ OWASP LLM06: Excessive Agency</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">⚙️ OWASP LLM06: Excessive Agency</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Si verifica quando ad un agente IA vengono assegnati permessi operativi eccessivi (es. cancellare database o inviare email di massa) senza un ciclo di approvazione umana (Human-in-the-Loop).
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">⚙️ OWASP LLM06: Excessive Agency</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">⚙️ OWASP LLM06: Excessive Agency</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Occurs when an autonomous agent is granted unrestricted capabilities (such as deleting databases or sending emails) without Human-in-the-Loop verification.
                 </p>
@@ -428,13 +428,13 @@ function initApp() {
             desc: 'Sonde per esfiltrare il prompt di sistema riservato e le regole aziendali.',
             desc_en: 'Probes to exfiltrate proprietary system prompts and enterprise rules.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">🕵️ OWASP LLM07: System Prompt Extraction</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">🕵️ OWASP LLM07: System Prompt Extraction</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Sonde semantiche e prompt di roleplay ideati per spingere l'LLM a rivelare le sue istruzioni segrete di sistema, la proprietà intellettuale o chiavi riservate.
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">🕵️ OWASP LLM07: System Prompt Extraction</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">🕵️ OWASP LLM07: System Prompt Extraction</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Roleplay prompts and extraction probes designed to trick the LLM into disclosing proprietary system instructions or hardcoded API credentials.
                 </p>
@@ -449,13 +449,13 @@ function initApp() {
             desc: 'Invocazione malevola di comandi shell (rm -rf, subprocess, curl|sh) negli agenti.',
             desc_en: 'Malicious execution of shell commands (rm -rf, subprocess, curl|sh) in agents.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">💥 OWASP LLM08: Agentic Tool Hijack (RCE)</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">💥 OWASP LLM08: Agentic Tool Hijack (RCE)</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Vettore critico dove una Prompt Injection convince un agente dotato di interprete di codice (Python REPL / Shell) ad eseguire comandi di sistema distruttivi come <code>rm -rf /</code> o <code>curl | sh</code>.
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">💥 OWASP LLM08: Agentic Tool Hijack (RCE)</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">💥 OWASP LLM08: Agentic Tool Hijack (RCE)</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Critical flaw where a prompt injection trick an agent equipped with code execution tools (Python REPL / Shell) into executing destructive OS commands like <code>rm -rf /</code>.
                 </p>
@@ -470,13 +470,13 @@ function initApp() {
             desc: 'Fiducia cieca nel codice generato dall\'IA che importa librerie malware inesistenti.',
             desc_en: 'Blind trust in AI-generated code importing non-existent malware packages.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">📦 OWASP LLM09: Slopsquatting & Package Typosquatting</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">📦 OWASP LLM09: Slopsquatting & Package Typosquatting</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Gli LLM a volte allucinano pacchetti npm o PyPI inesistenti. Gli attaccanti registrano questi pacchetti fittizi pubblicando malware che viene scaricato dagli sviluppatori che copiano il codice dall'IA.
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">📦 OWASP LLM09: Slopsquatting & Package Typosquatting</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">📦 OWASP LLM09: Slopsquatting & Package Typosquatting</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     LLMs occasionally hallucinate non-existent npm or PyPI package names. Attackers register these fake packages with malware, infecting developers who blindly trust AI code snippets.
                 </p>
@@ -491,13 +491,13 @@ function initApp() {
             desc: 'Esfiltrazione dei pesi proprietari del modello e reverse engineering.',
             desc_en: 'Exfiltration of proprietary model weights and reverse engineering.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">🔓 OWASP LLM10: Model Theft</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">🔓 OWASP LLM10: Model Theft</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Sottrazione non autorizzata dei pesi proprietari del modello o replicazione sistematica delle sue capacità tramite query massive ad alta frequenza (Distillation Attacks).
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">🔓 OWASP LLM10: Model Theft</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">🔓 OWASP LLM10: Model Theft</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Unauthorized exfiltration of proprietary model weights or functional cloning via systematic high-frequency API querying (Distillation Attacks).
                 </p>
@@ -512,13 +512,13 @@ function initApp() {
             desc: 'Attacchi orchestrati con 10.000 sonde al minuto per scoprire vulnerabilità zero-day.',
             desc_en: 'Orchestrated attacks with 10,000 probes per minute to uncover zero-day flaws.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">⚔️ Multi-Turn Red-Teaming (Microsoft PyRIT & NVIDIA Garak)</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">⚔️ Multi-Turn Red-Teaming (Microsoft PyRIT & NVIDIA Garak)</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Utilizzo di framework aziendali automatizzati (Microsoft PyRIT, NVIDIA Garak, Promptfoo) per eseguire audit di sicurezza multi-turn e stress-testare la resilienza delle barriere difensive.
                 </p>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">⚔️ Multi-Turn Red-Teaming (Microsoft PyRIT & NVIDIA Garak)</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">⚔️ Multi-Turn Red-Teaming (Microsoft PyRIT & NVIDIA Garak)</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Automated enterprise frameworks (Microsoft PyRIT, NVIDIA Garak) that orchestrate multi-turn adversarial probes to benchmark guardrail resilience.
                 </p>
@@ -533,7 +533,7 @@ function initApp() {
             desc: 'Architetture e blueprint di codice enterprise pronti all\'uso per mettere in sicurezza la tua app.',
             desc_en: 'Production-ready enterprise code blueprints to secure your AI app.',
             content: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">💻 Blueprint di Codice Difensivo Enterprise</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">💻 Blueprint di Codice Difensivo Enterprise</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Standard d'integrazione di difesa per sviluppatori:
                 </p>
@@ -551,7 +551,7 @@ pub async fn inspect_and_forward(req_payload: &str) -> Result<String, SecurityEr
 }</code></pre>
             `,
             content_en: `
-                <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 12px;">💻 Enterprise Defensive Code Blueprints</h3>
+                <h3 style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 12px;">💻 Enterprise Defensive Code Blueprints</h3>
                 <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;">
                     Developer integration standard:
                 </p>
@@ -944,7 +944,7 @@ func AntaiMiddleware(next http.Handler) http.Handler {
                 <div style="width: 100%;">
                     <div class="scan-result-item">
                         <div>
-                            <strong style="color: #ffffff; font-size: 0.98rem;">[RUST SCANNER] Processi Attivi (${data.total_processes}) & RAM</strong>
+                            <strong style="color: var(--text-primary); font-size: 0.98rem; font-weight: 700;">[RUST SCANNER] Processi Attivi (${data.total_processes}) & RAM</strong>
                             <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">Uso Memoria: ${data.total_memory_used_mb}MB / ${data.total_memory_mb}MB (${data.memory_used_percent.toFixed(1)}%) — Tempo scansione: ${data.scan_duration_ms.toFixed(1)}ms</p>
                             ${anomaliesHtml}
                         </div>
@@ -952,7 +952,7 @@ func AntaiMiddleware(next http.Handler) http.Handler {
                     </div>
                     <div class="scan-result-item">
                         <div>
-                            <strong style="color: #ffffff; font-size: 0.98rem;">[SECURITY SCORE] Valutazione di Sicurezza Sistema</strong>
+                            <strong style="color: var(--text-primary); font-size: 0.98rem; font-weight: 700;">[SECURITY SCORE] Valutazione di Sicurezza Sistema</strong>
                             <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">Punteggio di integrità calcolato da ANTAI Sentinel: ${data.security_score} / 100</p>
                         </div>
                         <span class="badge badge-accent">SCORE: ${data.security_score}/100</span>
@@ -964,7 +964,7 @@ func AntaiMiddleware(next http.Handler) http.Handler {
                 <div style="width: 100%;">
                     <div class="scan-result-item">
                         <div>
-                            <strong style="color: #ffffff; font-size: 0.98rem;">[VERIFICATO] Memoria RAM & Processi</strong>
+                            <strong style="color: var(--text-primary); font-size: 0.98rem; font-weight: 700;">[VERIFICATO] Memoria RAM & Processi</strong>
                             <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">142 processi analizzati. Nessun iniettore di codice o malware attivo.</p>
                         </div>
                         <span class="badge badge-success">SICURO</span>
