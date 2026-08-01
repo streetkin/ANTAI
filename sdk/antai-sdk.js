@@ -1,7 +1,8 @@
 /**
- * ANTAI Security SDK v1.0.0 (Browser / Web Apps / Lovable / Bolt)
+ * ANTAI Security SDK v2.0.0 (Browser / Web Apps / Lovable / Bolt / Node.js)
  * Client-side sentinel that intercepts outgoing LLM prompts and user inputs.
  * Connects to local ANTAI Rust Proxy (http://127.0.0.1:8090/intercept).
+ * Supports Deception Honeypot diversion and Cognitive Counter-Payloads.
  */
 
 (function (global, factory) {
@@ -30,7 +31,7 @@
     /**
      * Valuta un payload di testo prima di inviarlo a un'API o LLM.
      * @param {string} payload - Il testo/prompt da verificare.
-     * @returns {Promise<{allowed: boolean, status: string, reason?: string, engine?: string}>}
+     * @returns {Promise<{allowed: boolean, status: string, reason?: string, engine?: string, simulated_payload?: string}>}
      */
     async scan(payload) {
       if (!payload || typeof payload !== "string" || payload.trim() === "") {
@@ -68,6 +69,24 @@
           return result;
         }
 
+        if (data.status === "diverted" || data.status === "counterattacked") {
+          const result = {
+            allowed: false, // Intercettato
+            status: data.status,
+            reason: data.reason,
+            engine: data.engine,
+            latency: data.latency,
+            simulated_payload: data.simulated_payload,
+            canary_token: data.canary_token,
+          };
+
+          if (typeof this.config.onThreatDetected === "function") {
+            this.config.onThreatDetected(result);
+          }
+
+          return result;
+        }
+
         return {
           allowed: true,
           status: "clean",
@@ -77,7 +96,6 @@
       } catch (err) {
         clearTimeout(timeoutId);
 
-        // Fallback: se ANTAI locale non è attivo e failOpen è true, fa passare
         if (this.config.failOpen) {
           return {
             allowed: true,
@@ -98,7 +116,6 @@
 
     /**
      * Patch automatica del global `window.fetch` per intercettare trasparentemente le chiamate API/LLM.
-     * Utilissimo per Lovable, Bolt, React e siti web esistenti.
      */
     protectFetch(urlPattern = /\/(chat|completions|generate|api\/v1)/i) {
       if (typeof window === "undefined" || !window.fetch) return;
@@ -125,6 +142,14 @@
             const verdict = await self.scan(payloadToScan);
 
             if (!verdict.allowed) {
+              if (verdict.status === "diverted" || verdict.status === "counterattacked") {
+                console.warn("[ANTAI DECEPTION] Threat diverted to synthetic environment:", verdict.reason);
+                return new Response(verdict.simulated_payload || "{}", {
+                  status: 200,
+                  headers: { "Content-Type": "application/json" },
+                });
+              }
+
               console.warn("[ANTAI SHIELD] Attacco bloccato:", verdict.reason);
               return new Response(
                 JSON.stringify({
@@ -148,7 +173,7 @@
         return originalFetch.apply(this, arguments);
       };
 
-      console.log("[ANTAI SDK] 🛡️ Automatic fetch protection active.");
+      console.log("[ANTAI SDK v2.0] 🛡️ Automatic fetch protection & deception active.");
     }
   }
 

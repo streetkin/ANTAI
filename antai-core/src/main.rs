@@ -1,10 +1,12 @@
-// ANTAI — Autonomous AI Cyber Defense Sentinel
+// ANTAI — Autonomous AI Cyber Defense Sentinel & Deception Core
 // Entry Point: avvia il Proxy Interceptor (8090) e il Bridge REST API (8091).
 
 mod config;
 mod sanitizer;
 mod asymmetric_engine;
 mod system_scanner;
+mod deception;
+mod immune_memory;
 mod proxy;
 mod bridge;
 
@@ -12,6 +14,8 @@ use config::AntaiConfig;
 use sanitizer::HeuristicSanitizer;
 use asymmetric_engine::AsymmetricEngine;
 use system_scanner::SystemScanner;
+use deception::DeceptionEngine;
+use immune_memory::ImmuneMemory;
 use proxy::{ProxyState, create_proxy_router};
 use bridge::create_bridge_router;
 
@@ -21,7 +25,6 @@ use tokio::net::TcpListener;
 
 #[cfg(windows)]
 fn enable_ansi_support() {
-    // Abilita i colori ANSI ed i caratteri VT100 nel terminale Windows (cmd.exe / powershell)
     let _ = std::process::Command::new("cmd")
         .args(["/c", "color"])
         .output();
@@ -40,8 +43,9 @@ async fn main() {
     println!(" ██║  ██║██║ ╚████║   ██║   ██║  ██║██║");
     println!(" ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚═╝");
     println!(" --------------------------------------------------");
-    println!(" 🛡️  AUTONOMOUS AI CYBER DEFENSE SENTINEL v1.0");
-    println!(" ⚡ RUST NATIVE ENGINE (COMPILED - 0.05µs LATENCY)");
+    println!(" 🛡️  AUTONOMOUS AI CYBER DEFENSE SENTINEL v2.0");
+    println!(" 🧬 DIGITAL IMMUNE SYSTEM & BEELZEBUB DECEPTION CORE");
+    println!(" ⚡ RUST NATIVE ENGINE (COMPILED - <0.05µs LATENCY)");
     println!(" --------------------------------------------------");
     println!();
 
@@ -61,7 +65,7 @@ async fn main() {
 
     // Inizializza il sanitizer euristico
     let sanitizer = HeuristicSanitizer::new();
-    println!("[ANTAI] Filtro Euristico compilato (22 pattern di attacco attivi).");
+    println!("[ANTAI] Filtro Euristico compilato (39 pattern di attacco & MCP decoy attivi).");
 
     // Inizializza lo Scanner di Sistema
     let scanner = SystemScanner::new();
@@ -71,11 +75,20 @@ async fn main() {
     let ai_engine = AsymmetricEngine::new();
     println!("[ANTAI] Motore IA Asimmetrico inizializzato.");
 
+    // Inizializza il Deception Engine & l'Immune Memory
+    let deception = DeceptionEngine::new();
+    println!("[ANTAI] 🎭 Deception Engine (Beelzebub Honeypots & MCP Decoys) online.");
+
+    let immune_memory = ImmuneMemory::new();
+    println!("[ANTAI] 🧬 Memoria Immunitaria Digitale (Hackademy Loop) inizializzata ({} anticorpi registrati).", immune_memory.antibodies.len());
+
     // Stato condiviso tra proxy e bridge
     let shared_state = Arc::new(ProxyState {
         sanitizer,
         ai_engine,
         scanner,
+        deception,
+        immune_memory: RwLock::new(immune_memory),
         config: RwLock::new(config.clone()),
         threat_log: RwLock::new(Vec::new()),
     });
@@ -116,7 +129,7 @@ async fn main() {
             addr
         );
         println!();
-        println!("[ANTAI] ✅ ANTAI SHIELD ONLINE — Sistema operativo e in difesa.");
+        println!("[ANTAI] ✅ ANTAI SENTINEL & DECEPTION CORE ONLINE — Sistema operativo e in difesa.");
         println!("[ANTAI] Apri index.html nel browser per la Dashboard.");
         println!();
 
@@ -125,6 +138,6 @@ async fn main() {
             .expect("[ANTAI] Bridge REST API terminato in modo inatteso");
     });
 
-    // Attendi entrambi i server (girano per sempre)
+    // Attendi entrambi i server
     let _ = tokio::join!(proxy_handle, bridge_handle);
 }

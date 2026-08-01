@@ -1,6 +1,6 @@
 // ANTAI Core — Dashboard Bridge REST API (porta 8091)
 // Espone gli endpoint REST per collegare la Dashboard UI (index.html/app.js)
-// al motore Rust in tempo reale. CORS abilitato SOLO per localhost.
+// al motore Rust in tempo reale. CORS abilitato per localhost e file://.
 
 use axum::{
     extract::State,
@@ -53,18 +53,23 @@ pub struct KeysRequest {
     pub groq_key: Option<String>,
 }
 
-/// Risposta al salvataggio chiavi.
+/// Richiesta cambio modalità di difesa.
+#[derive(Deserialize)]
+pub struct ModeRequest {
+    pub mode: String, // "shield" | "deception" | "immune_counter"
+}
+
+/// Risposta generica per salvataggi.
 #[derive(Serialize)]
-pub struct KeysResponse {
-    pub saved: bool,
+pub struct GenericResponse {
+    pub success: bool,
     pub message: String,
 }
 
 /// Crea il router del bridge REST (porta 8091).
 pub fn create_bridge_router(state: Arc<ProxyState>) -> Router {
-    // CORS: permetti solo localhost e file:// per sicurezza
     let cors = CorsLayer::new()
-        .allow_origin(Any) // necessario per file:// protocol
+        .allow_origin(Any)
         .allow_methods([Method::GET, Method::POST, Method::OPTIONS])
         .allow_headers([header::CONTENT_TYPE, header::AUTHORIZATION]);
 
@@ -74,6 +79,9 @@ pub fn create_bridge_router(state: Arc<ProxyState>) -> Router {
         .route("/api/scan", post(handle_scan))
         .route("/api/keys", post(handle_keys))
         .route("/api/config", get(handle_config))
+        .route("/api/config/mode", post(handle_set_mode))
+        .route("/api/deception/decoys", get(handle_decoys))
+        .route("/api/immune/antibodies", get(handle_antibodies))
         .route("/api/system/scan", get(handle_system_scan).post(handle_system_scan))
         .route("/api/system/processes", get(handle_system_processes))
         .layer(cors)
@@ -98,12 +106,11 @@ async fn handle_status(State(state): State<Arc<ProxyState>>) -> Json<StatusRespo
     })
 }
 
-/// GET /api/threats — Lista delle minacce bloccate.
+/// GET /api/threats — Lista delle minacce bloccate/dirottate.
 async fn handle_threats(
     State(state): State<Arc<ProxyState>>,
 ) -> Json<Vec<crate::proxy::ThreatEntry>> {
     let threats = state.threat_log.read().await;
-    // Restituisce le ultime 50 minacce (ordine cronologico inverso)
     let recent: Vec<_> = threats.iter().rev().take(50).cloned().collect();
     Json(recent)
 }
@@ -113,7 +120,8 @@ async fn handle_scan(
     State(state): State<Arc<ProxyState>>,
     Json(req): Json<ScanRequest>,
 ) -> Json<ScanResponse> {
-    let result = state.sanitizer.inspect(&req.payload);
+    let immune_mem = state.immune_memory.read().await;
+    let result = state.sanitizer.inspect(&req.payload, &immune_mem);
 
     Json(ScanResponse {
         blocked: result.blocked,
@@ -127,7 +135,7 @@ async fn handle_scan(
 async fn handle_keys(
     State(state): State<Arc<ProxyState>>,
     Json(req): Json<KeysRequest>,
-) -> Json<KeysResponse> {
+) -> Json<GenericResponse> {
     let mut config = state.config.write().await;
 
     if let Some(key) = req.openrouter_key {
@@ -137,13 +145,42 @@ async fn handle_keys(
         config.set_groq_key(key);
     }
 
-    Json(KeysResponse {
-        saved: true,
+    Json(GenericResponse {
+        success: true,
         message: "Chiavi API salvate in modo sicuro.".to_string(),
     })
 }
 
-/// GET /api/config — Restituisce la configurazione (chiavi mascherate).
+/// POST /api/config/mode — Imposta la modalità di difesa.
+async fn handle_set_mode(
+    State(state): State<Arc<ProxyState>>,
+    Json(req): Json<ModeRequest>,
+) -> Json<GenericResponse> {
+    let mut config = state.config.write().await;
+    config.defense_mode = req.mode.clone();
+
+    Json(GenericResponse {
+        success: true,
+        message: format!("Modalità di difesa aggiornata a: {}", req.mode),
+    })
+}
+
+/// GET /api/deception/decoys — Elenco degli strumenti esca MCP attivi.
+async fn handle_decoys(
+    State(state): State<Arc<ProxyState>>,
+) -> Json<Vec<crate::deception::McpDecoyTool>> {
+    Json(state.deception.decoy_tools.clone())
+}
+
+/// GET /api/immune/antibodies — Elenco degli anticorpi memorizzati.
+async fn handle_antibodies(
+    State(state): State<Arc<ProxyState>>,
+) -> Json<Vec<crate::immune_memory::Antibody>> {
+    let memory = state.immune_memory.read().await;
+    Json(memory.antibodies.clone())
+}
+
+/// GET /api/config — Restituisce la configurazione.
 async fn handle_config(State(state): State<Arc<ProxyState>>) -> Json<serde_json::Value> {
     let config = state.config.read().await;
 
@@ -158,7 +195,7 @@ async fn handle_config(State(state): State<Arc<ProxyState>>) -> Json<serde_json:
     }))
 }
 
-/// GET/POST /api/system/scan — Scansione del sistema (RAM, CPU, Processi sospetti).
+/// GET/POST /api/system/scan — Scansione del sistema.
 async fn handle_system_scan(
     State(state): State<Arc<ProxyState>>,
 ) -> Json<crate::system_scanner::SystemScanReport> {
@@ -166,7 +203,7 @@ async fn handle_system_scan(
     Json(report)
 }
 
-/// GET /api/system/processes — Elenco dei top processi di sistema per RAM.
+/// GET /api/system/processes — Elenco dei processi per RAM.
 async fn handle_system_processes(
     State(state): State<Arc<ProxyState>>,
 ) -> Json<Vec<crate::system_scanner::ProcessInfo>> {

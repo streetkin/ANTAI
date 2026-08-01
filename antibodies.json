@@ -1,0 +1,20 @@
+[
+  {
+    "id": "AB-001",
+    "pattern": "system override recursive prompt",
+    "description": "Recognized recursive instruction hijacking attempt",
+    "severity": "HIGH",
+    "created_at": "2026-08-01 02:00:00",
+    "times_triggered": 1,
+    "is_sanitized": true
+  },
+  {
+    "id": "AB-002",
+    "pattern": "decoy_exec_cmd",
+    "description": "Attempted execution of MCP Decoy Tool execute_system_command",
+    "severity": "CRITICAL",
+    "created_at": "2026-08-01 02:05:00",
+    "times_triggered": 3,
+    "is_sanitized": true
+  }
+]

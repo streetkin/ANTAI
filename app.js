@@ -1,6 +1,10 @@
 /* ANTAI CONTAINER-LESS FLUID IMPERIAL — ENTERPRISE ENGINE (v1.0 RELEASE) */
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+    }
+
     // 1. DOM REFERENCES & STATE
     let currentLang = 'it';
     let currentFilter = 'all';
@@ -18,6 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'overview': {
             title: { it: 'Control Room Imperiale', en: 'Imperial Control Room' },
             subtitle: { it: 'Monitoraggio in tempo reale e protezione autonoma contro attacchi IA', en: 'Real-time autonomous defense against AI-driven cyber exploits & prompt injections' }
+        },
+        'vetrina': {
+            title: { it: 'Vetrina ANTAI — Il Sistema Immunitario Digitale per l\'IA', en: 'ANTAI Showcase — The Digital Immune System for AI' },
+            subtitle: { it: 'Presentazione completa dell\'architettura di difesa autonoma, isolamento Beelzebub e simulazione viva', en: 'Complete showcase of autonomous immune defense architecture, Beelzebub deception, and live simulation' }
+        },
+        'immune-deception': {
+            title: { it: 'Immune System & Beelzebub Deception Core', en: 'Digital Immune System & Beelzebub Deception' },
+            subtitle: { it: 'Gestione Honeypot Beelzebub, MCP Decoys, Contrattacco Cognitivo e Memoria Immunitaria', en: 'Beelzebub Honeypots, MCP Decoys, Cognitive Counterattacks, and Immune Memory' }
         },
         'pc-scanner': {
             title: { it: 'Scansione Sicurezza PC & Memoria', en: 'PC Security Audit & Memory Scanner' },
@@ -579,15 +591,7 @@ pub async fn inspect_and_forward(req_payload: &str) -> Result<String, SecurityEr
     });
 
     // 6. ENCYCLOPEDIA CHIP FILTERS & SEARCH LISTENERS
-    const chipBtns = document.querySelectorAll('.chip-btn');
-    chipBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            chipBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentFilter = btn.getAttribute('data-cat');
-            renderEncIndex();
-        });
-    });
+    // (chip-btn filter removed — no chip elements in current HTML)
 
     if (encSearchInput) {
         encSearchInput.addEventListener('input', (e) => {
@@ -600,107 +604,6 @@ pub async fn inspect_and_forward(req_payload: &str) -> Result<String, SecurityEr
     renderEncIndex();
     setLanguage('it');
 
-    // 7. AMBIENT PARTICLE CANVAS ANIMATION
-    const pCanvas = document.getElementById('particle-canvas');
-    if (pCanvas) {
-        const ctx = pCanvas.getContext('2d');
-        let width = pCanvas.width = window.innerWidth;
-        let height = pCanvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            width = pCanvas.width = window.innerWidth;
-            height = pCanvas.height = window.innerHeight;
-        });
-
-        const particles = Array.from({ length: 45 }, () => ({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4,
-            radius: Math.random() * 2 + 1
-        }));
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
-            ctx.strokeStyle = 'rgba(0, 102, 255, 0.12)';
-
-            particles.forEach((p, i) => {
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < 0 || p.x > width) p.vx *= -1;
-                if (p.y < 0 || p.y > height) p.vy *= -1;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 130) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            });
-
-            requestAnimationFrame(drawParticles);
-        }
-        drawParticles();
-    }
-
-    // 8. CORE SHIELD VISUALIZER CANVAS
-    const cCanvas = document.getElementById('core-visual-canvas');
-    if (cCanvas) {
-        const ctx = cCanvas.getContext('2d');
-        const cx = 100, cy = 100;
-        let angle = 0;
-
-        function drawCore() {
-            ctx.clearRect(0, 0, 200, 200);
-            angle += 0.015;
-
-            ctx.save();
-            ctx.translate(cx, cy);
-            ctx.rotate(angle);
-            ctx.strokeStyle = 'rgba(0, 102, 255, 0.85)';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([12, 16]);
-            ctx.beginPath();
-            ctx.arc(0, 0, 80, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.restore();
-
-            ctx.save();
-            ctx.translate(cx, cy);
-            ctx.rotate(-angle * 1.4);
-            ctx.strokeStyle = 'rgba(0, 240, 255, 0.9)';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([6, 10]);
-            ctx.beginPath();
-            ctx.arc(0, 0, 60, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.restore();
-
-            const glowRad = 35 + Math.sin(angle * 3) * 3;
-            const grad = ctx.createRadialGradient(cx, cy, 4, cx, cy, glowRad);
-            grad.addColorStop(0, 'rgba(0, 240, 255, 0.95)');
-            grad.addColorStop(0.5, 'rgba(0, 102, 255, 0.5)');
-            grad.addColorStop(1, 'rgba(0, 102, 255, 0)');
-
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.arc(cx, cy, glowRad, 0, Math.PI * 2);
-            ctx.fill();
-
-            requestAnimationFrame(drawCore);
-        }
-        drawCore();
-    }
 
     // 9. SDK HUB SNIPPETS SWITCHER
     const sdkBtns = document.querySelectorAll('.sdk-tab-btn');
@@ -1064,6 +967,9 @@ func AntaiMiddleware(next http.Handler) http.Handler {
                 const realThreats = await threatsResp.json();
                 renderRealThreats(realThreats);
             }
+
+            // Poll Decoys and Antibodies
+            fetchDecoysAndAntibodies();
         } catch (e) {
             if (mainStatusLabel) mainStatusLabel.textContent = currentLang === 'it' ? 'IN ATTESA DEL MOTORE' : 'WAITING FOR ENGINE';
             if (mainStatusIndicator) {
@@ -1073,6 +979,64 @@ func AntaiMiddleware(next http.Handler) http.Handler {
             if (coreStatusText) coreStatusText.textContent = 'AVVIA start_antai.bat';
         }
     }
+
+    async function fetchDecoysAndAntibodies() {
+        try {
+            const decoysResp = await fetch('http://127.0.0.1:8091/api/deception/decoys');
+            if (decoysResp.ok) {
+                const decoys = await decoysResp.json();
+                const container = document.getElementById('decoy-tools-container');
+                if (container && decoys.length > 0) {
+                    container.innerHTML = decoys.map(d => `
+                        <div class="decoy-item">
+                            <div class="decoy-badge critical">${d.trap_level} TRAP</div>
+                            <div class="decoy-info">
+                                <strong>${d.name}</strong>
+                                <code>${d.parameters_schema}</code>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            const abResp = await fetch('http://127.0.0.1:8091/api/immune/antibodies');
+            if (abResp.ok) {
+                const abs = await abResp.json();
+                const abContainer = document.getElementById('antibodies-container');
+                if (abContainer && abs.length > 0) {
+                    abContainer.innerHTML = abs.map(a => `
+                        <div class="antibody-item">
+                            <span class="ab-id">${a.id}</span>
+                            <span class="ab-desc">${a.pattern} (${a.times_triggered}x)</span>
+                            <span class="ab-tag">${a.is_sanitized ? 'Sanitizzato' : 'Pendente'}</span>
+                        </div>
+                    `).join('');
+                }
+            }
+        } catch(e) {}
+    }
+
+    window.setAntaiMode = async function(mode) {
+        try {
+            const res = await fetch('http://127.0.0.1:8091/api/config/mode', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mode })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                showToast(`Modalità ANTAI aggiornata: ${mode.toUpperCase()}`, 'success');
+
+                document.querySelectorAll('.defense-selector-card').forEach(c => c.classList.remove('active'));
+                if (mode === 'shield') document.getElementById('card-mode-shield')?.classList.add('active');
+                if (mode === 'deception') document.getElementById('card-mode-deception')?.classList.add('active');
+                if (mode === 'immune_counter') document.getElementById('card-mode-counter')?.classList.add('active');
+            }
+        } catch(e) {
+            showToast('Errore durante la modifica della modalità.', 'info');
+        }
+    };
+
 
     if (quickScanBtn) {
         quickScanBtn.addEventListener('click', () => {
