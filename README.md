@@ -33,9 +33,14 @@ Mentre i firewall e le guardrail tradizionali agiscono come barriere rigide e st
 
 ## 🏗️ Architettura del Sistema (Hybrid Enterprise Native)
 
-<p align="center">
-  <img src="antai_logo.png" alt="ANTAI System Architecture Logo" width="220">
-</p>
+```text
+  █████╗ ███╗   ██╗████████╗█████╗ ██╗
+ ██╔══██╗████╗  ██║╚══██╔══╝██╔══██╗██║   AI CYBER SENTINEL
+ ███████║██╔██╗ ██║   ██║   ███████║██║   AUTONOMOUS RUST ENGINE
+ ██╔══██║██║╚██╗██║   ██║   ██╔══██║██║   MICROSECOND AI DEFENSE
+ ██║  ██║██║ ╚████║   ██║   ██║  ██║██║
+ ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚═╝
+```
 
 ANTAI è strutturato come un vero software di sicurezza professionale a doppio livello:
 
