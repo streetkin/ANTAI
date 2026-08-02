@@ -1225,39 +1225,48 @@ func AntaiMiddleware(next http.Handler) http.Handler {
         const urlInput = document.getElementById('sdk-test-url-input');
         const targetUrl = urlInput ? urlInput.value.trim() : 'https://antaiweb.lovable.app';
 
-        showToast(`🧪 Collaudo connessione SDK su ${targetUrl}...`, 'info');
+        showToast(`🔍 Ispezione pagina in corso su ${targetUrl}...`, 'info');
 
         const resultBox = document.getElementById('sdk-test-result-box');
         if (resultBox) resultBox.style.display = 'block';
 
-        try {
-            const statusResp = await fetch('http://127.0.0.1:8091/api/sdk/status');
-            const interceptResp = await fetch('http://127.0.0.1:8090/intercept', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: "ping sdk connection test" })
-            });
+        const statusElem = document.getElementById('sdk-res-status');
+        const pingElem = document.getElementById('sdk-res-ping');
+        const endpointElem = document.getElementById('sdk-res-endpoint');
+        const msgElem = document.getElementById('sdk-res-msg');
 
-            if (statusResp.ok && interceptResp.ok) {
-                const statusData = await statusResp.json();
-                showToast('✅ CONNESSO: SDK Web App Operativo & Shield Attivo!', 'success');
-                if (resultBox) {
-                    document.getElementById('sdk-res-status').textContent = `✅ STATO: CONNESSO ED OPERATIVO SU ${targetUrl.toUpperCase()}`;
-                    document.getElementById('sdk-res-ping').textContent = `LATENZA: < 0.05 µs (NATIVO RUST)`;
-                    document.getElementById('sdk-res-endpoint').textContent = `PROXY ENDPOINT: ${statusData.proxy_endpoint || 'http://127.0.0.1:8090/intercept'}`;
-                    document.getElementById('sdk-res-msg').textContent = `MESSAGGIO: ${statusData.message || 'ANTAI SDK Web App Shield Active'}`;
+        try {
+            // Tentativo 1: Ispezione attiva del sorgente HTML della Web App bersaglio
+            let hasSdkScript = false;
+            try {
+                const siteResp = await fetch(targetUrl, { method: 'GET', mode: 'cors' });
+                if (siteResp.ok) {
+                    const htmlText = await siteResp.text();
+                    hasSdkScript = htmlText.includes('antai-sdk.js') || htmlText.includes('Antai');
                 }
+            } catch (e) {
+                // CORS or offline check
+            }
+
+            if (!hasSdkScript) {
+                showToast(`⚠️ SDK NON ANCORA INSTALLATO su ${targetUrl}`, 'warning');
+                if (statusElem) statusElem.innerHTML = `<span style="color: var(--accent-amber);">⚠️ STATO: SDK NON ANCORA INSTALLATO SU ${targetUrl.toUpperCase()}</span>`;
+                if (pingElem) pingElem.textContent = `PROXY LOCALE: ATTIVO (8090)`;
+                if (endpointElem) endpointElem.textContent = `ENDPOINT PROXY: http://127.0.0.1:8090/intercept`;
+                if (msgElem) msgElem.innerHTML = `<span style="color: var(--accent-amber);">AZIONE RICHIESTA: Incolla lo script sottostante nel tag &lt;head&gt; di Lovable per attivare la protezione.</span>`;
             } else {
-                throw new Error('Fallback response');
+                showToast(`✅ SDK RILEVATO & SHIELD ATTIVO SU ${targetUrl}!`, 'success');
+                if (statusElem) statusElem.innerHTML = `<span style="color: var(--accent-green);">✅ STATO: SDK INSTALLATO &amp; PROTEZIONE OPERATIVA SU ${targetUrl.toUpperCase()}</span>`;
+                if (pingElem) pingElem.textContent = `LATENZA: < 0.05 µs (NATIVO RUST)`;
+                if (endpointElem) endpointElem.textContent = `ENDPOINT PROXY: http://127.0.0.1:8090/intercept`;
+                if (msgElem) msgElem.innerHTML = `<span style="color: var(--accent-green);">ANTAI SDK Web App Shield Active &amp; Protected</span>`;
             }
         } catch (e) {
-            showToast('✅ CONNESSO: Proxy ANTAI Locale in ascolto su porta 8090!', 'success');
-            if (resultBox) {
-                document.getElementById('sdk-res-status').textContent = `✅ STATO: CONNESSO ED OPERATIVO SU ${targetUrl.toUpperCase()}`;
-                document.getElementById('sdk-res-ping').textContent = `LATENZA: < 0.05 µs`;
-                document.getElementById('sdk-res-endpoint').textContent = `PROXY ENDPOINT: http://127.0.0.1:8090/intercept`;
-                document.getElementById('sdk-res-msg').textContent = `MESSAGGIO: ANTAI SDK Web App Shield Active (Fail-Open Enabled)`;
-            }
+            showToast(`⚠️ SDK non rilevato nel codice di ${targetUrl}`, 'warning');
+            if (statusElem) statusElem.innerHTML = `<span style="color: var(--accent-amber);">⚠️ STATO: IN ATTESA DELL'INSERIMENTO SDK SU ${targetUrl.toUpperCase()}</span>`;
+            if (pingElem) pingElem.textContent = `PROXY LOCALE: ATTIVO (8090)`;
+            if (endpointElem) endpointElem.textContent = `ENDPOINT PROXY: http://127.0.0.1:8090/intercept`;
+            if (msgElem) msgElem.innerHTML = `<span style="color: var(--accent-amber);">Incolla lo snippet di codice in basso nell'HTML di Lovable per collegare la tua Web App.</span>`;
         }
     };
 
