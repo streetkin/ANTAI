@@ -1087,6 +1087,64 @@ func AntaiMiddleware(next http.Handler) http.Handler {
         } catch(e) {}
     }
 
+    window.simulateBeelzebubTrap = function() {
+        showToast('🧪 Attacco Beelzebub simulato! Esca MCP scattata.', 'success');
+        
+        const shellTrapElem = document.getElementById('trap-count-shell');
+        if (shellTrapElem) {
+            const current = parseInt(shellTrapElem.textContent || '318');
+            shellTrapElem.textContent = (current + 1).toString();
+        }
+
+        const abContainer = document.getElementById('antibodies-container');
+        if (abContainer) {
+            const randomHex = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
+            const newCardHtml = `
+                <div style="padding: 16px; background: var(--bg-code); border-radius: var(--radius-md); border: 1px solid var(--accent-crimson); border-left: 4px solid var(--accent-crimson); animation: pulse-dot 0.8s ease-in-out;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span class="dna-badge" style="font-size: 0.85rem;">SHA256: 0x${randomHex}88A9</span>
+                        <span class="badge badge-accent">⚡ 1 NEUTRALIZZATO (NUOVO)</span>
+                    </div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary);">OWASP LLM08 · Agentic Tool Shell Injection Trap</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono);">
+                        Pattern: <code>/mcp/tools/shell_exec?cmd=cat%20/etc/shadow</code>
+                    </div>
+                    <div style="margin-top: 8px; font-size: 0.72rem; color: var(--accent-green); display: flex; justify-content: space-between;">
+                        <span>Filtro Nativo: 0.04µs (Zero Costi API)</span>
+                        <span style="color: var(--primary-cyan);">STATO: IMMUTABILE</span>
+                    </div>
+                </div>
+            `;
+            abContainer.insertAdjacentHTML('afterbegin', newCardHtml);
+        }
+
+        const kpiCount = document.getElementById('kpi-antibodies-count');
+        if (kpiCount) {
+            const currAb = parseInt(kpiCount.textContent || '36');
+            kpiCount.textContent = `${currAb + 1} Firme`;
+        }
+    };
+
+    window.addCustomDecoyPrompt = function() {
+        const name = prompt('Inserisci il nome della nuova Esca MCP (es. fake-database-dump):');
+        if (name) {
+            showToast(`🪤 Nuova Esca MCP "${name}" armata con successo nel Beelzebub Fabric!`, 'success');
+            const tableBody = document.getElementById('decoys-table-body');
+            if (tableBody) {
+                const newRow = `
+                    <tr>
+                        <td class="dna-badge">${name}</td>
+                        <td><code>/mcp/tools/${name}</code></td>
+                        <td><code style="color: var(--accent-amber); font-size: 0.72rem;">{"status":"sandbox_trap"}</code></td>
+                        <td style="font-weight: 800; color: var(--accent-crimson);">0</td>
+                        <td><span class="badge badge-online">ARMED</span></td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('afterbegin', newRow);
+            }
+        }
+    };
+
     window.setAntaiMode = async function(mode) {
         try {
             const res = await fetch('http://127.0.0.1:8091/api/config/mode', {
