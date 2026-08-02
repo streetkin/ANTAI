@@ -43,53 +43,47 @@
                     <span><strong class="nav-item-num">01</strong> Control Room</span>
                 </button>
 
-                <button class="nav-item" data-tab="showcase" id="nav-showcase" onclick="switchTab('showcase')">
-                    <i data-lucide="layers-3"></i>
-                    <span><strong class="nav-item-num">02</strong> ANTAI Showcase</span>
-                    <span class="badge badge-accent">LIVE DEMO</span>
-                </button>
-
                 <button class="nav-item" data-tab="deception" id="nav-deception" onclick="switchTab('deception')">
                     <i data-lucide="bug"></i>
-                    <span><strong class="nav-item-num">03</strong> Immune System & Beelzebub</span>
+                    <span><strong class="nav-item-num">02</strong> Immune System & Beelzebub</span>
                 </button>
 
                 <button class="nav-item" data-tab="phagocytes" id="nav-phagocytes" onclick="switchTab('phagocytes')">
                     <i data-lucide="cpu"></i>
-                    <span><strong class="nav-item-num">04</strong> PC Memory Phagocytes</span>
+                    <span><strong class="nav-item-num">03</strong> PC Memory Phagocytes</span>
                     <span class="badge badge-online">PROTETTO</span>
                 </button>
 
                 <button class="nav-item" data-tab="sdk-hub" id="nav-sdk-hub" onclick="switchTab('sdk-hub')">
                     <i data-lucide="code-2"></i>
-                    <span><strong class="nav-item-num">05</strong> SDK Integration Hub</span>
+                    <span><strong class="nav-item-num">04</strong> SDK Integration Hub</span>
                 </button>
 
                 <button class="nav-item" data-tab="ai-providers" id="nav-ai-providers" onclick="switchTab('ai-providers')">
                     <i data-lucide="key-round"></i>
-                    <span><strong class="nav-item-num">06</strong> AI Provider Keys</span>
+                    <span><strong class="nav-item-num">05</strong> AI Provider Keys</span>
                 </button>
 
                 <button class="nav-item" data-tab="threat-log" id="nav-threat-log" onclick="switchTab('threat-log')">
                     <i data-lucide="scroll-text"></i>
-                    <span><strong class="nav-item-num">07</strong> Live Threat Audit Log</span>
+                    <span><strong class="nav-item-num">06</strong> Live Threat Audit Log</span>
                     <span class="badge badge-cyan" id="live-threat-count">0</span>
                 </button>
 
                 <div class="nav-section-label" style="margin-top: 14px;">ANTAI HACKADEMY</div>
                 <button class="nav-item" data-tab="hackademy-articles" id="nav-hackademy-articles" onclick="switchTab('hackademy-articles')">
                     <i data-lucide="graduation-cap"></i>
-                    <span><strong class="nav-item-num">08</strong> ANTAI Hackademy</span>
+                    <span><strong class="nav-item-num">07</strong> ANTAI Hackademy</span>
                 </button>
 
                 <button class="nav-item" data-tab="library" id="nav-library" onclick="switchTab('library')">
                     <i data-lucide="library"></i>
-                    <span><strong class="nav-item-num">09</strong> Threat Intelligence Library</span>
+                    <span><strong class="nav-item-num">08</strong> Threat Intelligence Library</span>
                 </button>
 
                 <button class="nav-item" data-tab="hackademy-faq" id="nav-hackademy-faq" onclick="switchTab('hackademy-faq')">
                     <i data-lucide="help-circle"></i>
-                    <span><strong class="nav-item-num">10</strong> FAQ & Blueprints Codice</span>
+                    <span><strong class="nav-item-num">09</strong> FAQ & Blueprints Codice</span>
                 </button>
             </nav>
 
@@ -221,7 +215,11 @@
                             <i data-lucide="terminal"></i>
                             <span>Stream di Intercettazione in Tempo Reale</span>
                         </div>
-                        <span class="badge badge-cyan">RUST INTERCEPTOR</span>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-secondary btn-sm" id="sim-prompt-inj-btn">🔬 Simula Prompt Injection</button>
+                            <button class="btn btn-secondary btn-sm" id="sim-ssrf-btn">🌐 Simula Furto Cloud SSRF</button>
+                            <span class="badge badge-cyan">RUST INTERCEPTOR</span>
+                        </div>
                     </div>
                     <div class="console-box" id="live-console">
                         <div class="console-line info">[ANTAI] Sistema Immunitario Digitale nativo inizializzato. Proxy epiteliale attivo su porta 8090.</div>
@@ -231,51 +229,7 @@
                 </div>
             </section>
 
-            <!-- TAB 2: ANTAI SHOWCASE -->
-            <section class="tab-pane" id="tab-showcase">
-                <div class="fluid-grid">
-                    <div class="panel" style="grid-column: span 2;">
-                        <div class="panel-header">
-                            <div class="panel-title">
-                                <i data-lucide="layers-3"></i>
-                                <span>Architettura di Difesa Asimmetrica a 4 Livelli</span>
-                            </div>
-                            <div style="display: flex; gap: 8px;">
-                                <button class="btn btn-secondary btn-sm" id="sim-prompt-inj-btn">🔬 Simula Prompt Injection</button>
-                                <button class="btn btn-secondary btn-sm" id="sim-ssrf-btn">🌐 Simula Furto Cloud SSRF</button>
-                            </div>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
-                            <div style="background: var(--bg-code); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
-                                <span class="badge badge-accent" style="margin-bottom: 8px; display: inline-block;">LAYER 01</span>
-                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px;">Rust Proxy Sentinel</h4>
-                                <p style="font-size: 0.78rem; color: var(--text-muted);">&lt; 0.05 µs latenza. Intercettazione socket prima che il payload tocchi il modello.</p>
-                            </div>
-
-                            <div style="background: var(--bg-code); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
-                                <span class="badge badge-cyan" style="margin-bottom: 8px; display: inline-block;">LAYER 02</span>
-                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px;">Classifier & RegexSet</h4>
-                                <p style="font-size: 0.78rem; color: var(--text-muted);">1.203 firme euristiche deterministiche per blocco istantaneo.</p>
-                            </div>
-
-                            <div style="background: var(--bg-code); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
-                                <span class="badge badge-online" style="margin-bottom: 8px; display: inline-block;">LAYER 03</span>
-                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px;">Asymmetric AI Brain</h4>
-                                <p style="font-size: 0.78rem; color: var(--text-muted);">Valutazione semantica asincrona con Ollama o OpenRouter isolato.</p>
-                            </div>
-
-                            <div style="background: var(--bg-code); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
-                                <span class="badge badge-accent" style="margin-bottom: 8px; display: inline-block;">LAYER 04</span>
-                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px;">Beelzebub Isolation</h4>
-                                <p style="font-size: 0.78rem; color: var(--text-muted);">Honeypots MCP e trappole fittizie che catturano i payload registrando l'anticorpo.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 3: IMMUNE SYSTEM & BEELZEBUB -->
+            <!-- TAB 2: IMMUNE SYSTEM & BEELZEBUB -->
             <section class="tab-pane" id="tab-deception">
                 <!-- Top Action Header for Tab 03 -->
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
