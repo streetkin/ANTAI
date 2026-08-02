@@ -1251,22 +1251,47 @@ func AntaiMiddleware(next http.Handler) http.Handler {
         if (liveConsole) liveConsole.innerHTML = '';
 
         threats.forEach(threat => {
+            let engineBadgeClass = 'badge-cyan';
+            let engineLabel = threat.engine_used || 'RUST L1 FILTER';
+
+            if (engineLabel.includes('Heuristic') || engineLabel.includes('Rust')) {
+                engineBadgeClass = 'badge-cyan';
+                engineLabel = '⚡ RUST L1 SANITIZER';
+            } else if (engineLabel.includes('Immune')) {
+                engineBadgeClass = 'badge-purple';
+                engineLabel = '🧬 IMMUNE ANTIBODY';
+            } else if (engineLabel.includes('AI') || engineLabel.includes('Asymmetric')) {
+                engineBadgeClass = 'badge-online';
+                engineLabel = '🧠 ASYMMETRIC AI BRAIN';
+            }
+
+            let statusBadgeClass = 'badge-accent';
+            if (threat.status === 'HONEYPOT_DIVERTED') {
+                statusBadgeClass = 'badge-amber';
+            } else if (threat.status === 'IMMUNE_COUNTERATTACK') {
+                statusBadgeClass = 'badge-purple';
+            } else if (threat.status === 'BLOCKED') {
+                statusBadgeClass = 'badge-accent';
+            } else {
+                statusBadgeClass = 'badge-online';
+            }
+
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td>${threat.timestamp}</td>
-                <td>127.0.0.1 / Localhost</td>
-                <td><span style="color: var(--accent-ruby); font-weight: bold;">${threat.attack_type}</span></td>
-                <td style="color: var(--text-muted); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${threat.payload_preview}</td>
-                <td><span class="badge badge-accent">${threat.engine_used}</span></td>
-                <td>${threat.latency}</td>
-                <td><span class="badge badge-online">${threat.status}</span></td>
+                <td style="font-family: var(--font-mono); font-size: 0.78rem;">${threat.timestamp}</td>
+                <td style="font-size: 0.78rem;">127.0.0.1 / Localhost</td>
+                <td><span style="color: var(--accent-crimson); font-weight: 700;">${threat.attack_type}</span></td>
+                <td style="color: var(--text-muted); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-size: 0.75rem;">${threat.payload_preview}</td>
+                <td><span class="badge ${engineBadgeClass}">${engineLabel}</span></td>
+                <td style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--accent-green);">${threat.latency}</td>
+                <td><span class="badge ${statusBadgeClass}">${threat.status}</span></td>
             `;
             threatTableBody.appendChild(tr);
 
             if (liveConsole) {
                 const div = document.createElement('div');
                 div.className = 'console-line alert';
-                div.textContent = `[RUST INTERCEPTED] ${threat.attack_type} -> ${threat.engine_used} (${threat.latency})`;
+                div.textContent = `[RUST INTERCEPTED] ${threat.attack_type} -> ${engineLabel} (${threat.latency})`;
                 liveConsole.appendChild(div);
             }
         });
