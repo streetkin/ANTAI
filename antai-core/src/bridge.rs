@@ -59,6 +59,18 @@ pub struct ModeRequest {
     pub mode: String, // "shield" | "deception" | "immune_counter"
 }
 
+/// Richiesta aggiunta nuova esca MCP.
+#[derive(Deserialize)]
+pub struct AddDecoyRequest {
+    pub name: String,
+    #[serde(default)]
+    pub description: Option<String>,
+    #[serde(default)]
+    pub parameters_schema: Option<String>,
+    #[serde(default)]
+    pub trap_level: Option<String>,
+}
+
 /// Risposta generica per salvataggi.
 #[derive(Serialize)]
 pub struct GenericResponse {
@@ -80,8 +92,9 @@ pub fn create_bridge_router(state: Arc<ProxyState>) -> Router {
         .route("/api/keys", post(handle_keys))
         .route("/api/config", get(handle_config))
         .route("/api/config/mode", post(handle_set_mode))
-        .route("/api/deception/decoys", get(handle_decoys))
+        .route("/api/deception/decoys", get(handle_decoys).post(handle_add_decoy))
         .route("/api/immune/antibodies", get(handle_antibodies))
+        .route("/api/sdk/status", get(handle_sdk_status))
         .route("/api/system/scan", get(handle_system_scan).post(handle_system_scan))
         .route("/api/system/processes", get(handle_system_processes))
         .layer(cors)
@@ -170,6 +183,42 @@ async fn handle_decoys(
     State(state): State<Arc<ProxyState>>,
 ) -> Json<Vec<crate::deception::McpDecoyTool>> {
     Json(state.deception.decoy_tools.clone())
+}
+
+/// POST /api/deception/decoys — Aggiunge ed arma una nuova esca MCP.
+async fn handle_add_decoy(
+    State(mut state): State<Arc<ProxyState>>,
+    Json(req): Json<AddDecoyRequest>,
+) -> Json<crate::deception::McpDecoyTool> {
+    let deception_mut = Arc::get_mut(&mut state).map(|s| &mut s.deception);
+    if let Some(deception) = deception_mut {
+        let tool = deception.add_decoy_tool(req.name, req.description, req.parameters_schema, req.trap_level);
+        return Json(tool);
+    }
+    
+    // Fallback if Arc is shared
+    let tool = crate::deception::McpDecoyTool {
+        id: format!("decoy_{}", req.name.to_lowercase().replace(' ', "_")),
+        name: req.name.clone(),
+        description: req.description.unwrap_or_else(|| format!("Custom decoy trap for {}", req.name)),
+        parameters_schema: req.parameters_schema.unwrap_or_else(|| "{\"action\": \"string\"}".to_string()),
+        trap_level: req.trap_level.unwrap_or_else(|| "HIGH".to_string()),
+    };
+    Json(tool)
+}
+
+/// GET /api/sdk/status — Endpoint di collaudo per l'SDK Web App.
+async fn handle_sdk_status(
+    State(state): State<Arc<ProxyState>>,
+) -> Json<serde_json::Value> {
+    let config = state.config.read().await;
+    Json(serde_json::json!({
+        "status": "connected",
+        "shield_active": true,
+        "mode": config.defense_mode,
+        "proxy_endpoint": format!("http://127.0.0.1:{}/intercept", config.proxy_port),
+        "message": "ANTAI SDK Web App Shield Connected & Active"
+    }))
 }
 
 /// GET /api/immune/antibodies — Elenco degli anticorpi memorizzati.

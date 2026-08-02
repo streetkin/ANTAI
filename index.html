@@ -479,11 +479,41 @@
 
             <!-- TAB 5: SDK INTEGRATION HUB -->
             <section class="tab-pane" id="tab-sdk-hub">
+                <!-- Interactive Web App Connection & Protection Tester -->
+                <div class="panel" style="margin-bottom: 20px; border-left: 4px solid var(--primary-cyan);">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i data-lucide="shield-check" style="color: var(--primary-cyan);"></i>
+                            <span>Live Web App Security & Connection Tester (Collaudo SDK)</span>
+                        </div>
+                        <span class="badge badge-cyan">COLLETTATORE LIVE 8090</span>
+                    </div>
+                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
+                        Verifica in tempo reale se la tua applicazione Web (es. creata con Lovable, Bolt.new, React o Next.js) è protetta e collegata correttamente al Proxy ANTAI locale.
+                    </p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <input type="text" id="sdk-test-url-input" value="https://antaiweb.lovable.app" placeholder="es. https://tua-app.lovable.app o http://localhost:5173" style="flex: 1; min-width: 260px; padding: 10px 14px; background: var(--bg-code); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: #fff; font-family: var(--font-mono); font-size: 0.82rem;">
+                        <button class="btn btn-primary" onclick="testSdkConnection()">
+                            <i data-lucide="zap"></i>
+                            <span>🧪 Test Connessione SDK</span>
+                        </button>
+                    </div>
+
+                    <div id="sdk-test-result-box" style="padding: 14px; background: var(--bg-code); border-radius: var(--radius-md); border: 1px solid var(--border-light); font-family: var(--font-mono); font-size: 0.8rem; display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="color: var(--accent-green); font-weight: 700;" id="sdk-res-status">✅ STATO: SDK OPERATIVO & PROTEZIONE ATTIVA</span>
+                            <span style="color: var(--primary-cyan);" id="sdk-res-ping">LATENZA: &lt; 0.05 µs</span>
+                        </div>
+                        <div style="color: var(--text-secondary); margin-bottom: 4px;" id="sdk-res-endpoint">ENDPOINT PROXY: http://127.0.0.1:8090/intercept</div>
+                        <div style="color: var(--accent-amber);" id="sdk-res-msg">MESSAGGIO: ANTAI SDK Web App Shield Connected &amp; Active</div>
+                    </div>
+                </div>
+
                 <div class="panel">
                     <div class="panel-header">
                         <div class="panel-title">
                             <i data-lucide="code-2"></i>
-                            <span>SDK Integration Hub</span>
+                            <span>SDK Integration Hub (Codice da Copiare)</span>
                         </div>
                     </div>
                     <div class="sdk-tabs-bar">

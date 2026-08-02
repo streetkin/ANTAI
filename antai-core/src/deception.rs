@@ -3,6 +3,8 @@
 // e Payload di Contrattacco Cognitivo per bloccare bot ed agenti IA maligni.
 
 use serde::{Deserialize, Serialize};
+use std::fs;
+use std::path::Path;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -26,11 +28,34 @@ pub struct CanaryToken {
 #[derive(Debug, Clone)]
 pub struct DeceptionEngine {
     pub decoy_tools: Vec<McpDecoyTool>,
+    storage_path: String,
 }
 
 impl DeceptionEngine {
     pub fn new() -> Self {
-        let decoy_tools = vec![
+        let storage_path = "decoys.json".to_string();
+        let mut engine = DeceptionEngine {
+            decoy_tools: Vec::new(),
+            storage_path,
+        };
+
+        engine.load();
+        engine
+    }
+
+    /// Carica le esche memorizzate su disco oppure le seed di default
+    fn load(&mut self) {
+        if Path::new(&self.storage_path).exists() {
+            if let Ok(content) = fs::read_to_string(&self.storage_path) {
+                if let Ok(loaded) = serde_json::from_str::<Vec<McpDecoyTool>>(&content) {
+                    self.decoy_tools = loaded;
+                    return;
+                }
+            }
+        }
+
+        // Esche di base (Seed Decoys)
+        self.decoy_tools = vec![
             McpDecoyTool {
                 id: "decoy_exec_cmd".to_string(),
                 name: "execute_system_command".to_string(),
@@ -54,7 +79,31 @@ impl DeceptionEngine {
             },
         ];
 
-        DeceptionEngine { decoy_tools }
+        let _ = self.save();
+    }
+
+    /// Salva le esche su disco
+    pub fn save(&self) -> Result<(), String> {
+        let json = serde_json::to_string_pretty(&self.decoy_tools).map_err(|e| e.to_string())?;
+        fs::write(&self.storage_path, json).map_err(|e| e.to_string())?;
+        Ok(())
+    }
+
+    /// Aggiunge ed arma una nuova esca MCP personalizzata
+    pub fn add_decoy_tool(&mut self, name: String, description: Option<String>, parameters_schema: Option<String>, trap_level: Option<String>) -> McpDecoyTool {
+        let id = format!("decoy_{}", name.to_lowercase().replace(' ', "_"));
+        let tool = McpDecoyTool {
+            id,
+            name: name.clone(),
+            description: description.unwrap_or_else(|| format!("Custom decoy trap for {}", name)),
+            parameters_schema: parameters_schema.unwrap_or_else(|| "{\"action\": \"string\"}".to_string()),
+            trap_level: trap_level.unwrap_or_else(|| "HIGH".to_string()),
+        };
+
+        self.decoy_tools.retain(|d| d.name != tool.name);
+        self.decoy_tools.push(tool.clone());
+        let _ = self.save();
+        tool
     }
 
     /// Genera un token Canary unico basato su nanosecondi di sistema.
