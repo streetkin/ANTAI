@@ -241,10 +241,17 @@
                             Ingegneria di inganno attivo: trappole MCP fittizie ed archiviazione immutabile di firme molecolari.
                         </p>
                     </div>
-                    <div style="display: flex; gap: 10px;">
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <select id="attack-vector-select" style="padding: 8px 12px; background: var(--bg-code); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: #fff; font-family: var(--font-mono); font-size: 0.8rem; outline: none; cursor: pointer;">
+                            <option value="shell_exec">🐚 1. Agentic Shell Injection (cat /etc/shadow)</option>
+                            <option value="aws_ssrf">☁️ 2. Cloud IAM Metadata SSRF (169.254.169.254)</option>
+                            <option value="sql_rag">🗄️ 3. SQL Injection & RAG Exfiltration</option>
+                            <option value="prompt_override">👑 4. Direct System Prompt Dump & Override</option>
+                            <option value="pypi_malware">📦 5. AI Code Slopsquatting Package Malware</option>
+                        </select>
                         <button class="btn btn-primary btn-sm" id="trigger-beelzebub-sim-btn" onclick="simulateBeelzebubTrap()">
                             <i data-lucide="flask-conical"></i>
-                            <span>🧪 Simula Infezione & Genera Anticorpo</span>
+                            <span>🧪 Simula Infezione Selezionata</span>
                         </button>
                         <button class="btn btn-secondary btn-sm" onclick="addCustomDecoyPrompt()">
                             <i data-lucide="plus-circle"></i>
