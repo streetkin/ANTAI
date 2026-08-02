@@ -545,18 +545,116 @@
                 </div>
             </section>
 
-            <!-- TAB 9: THREAT INTELLIGENCE LIBRARY -->
+            <!-- TAB 8: THREAT INTELLIGENCE LIBRARY -->
             <section class="tab-pane" id="tab-library">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
+                    <div>
+                        <h2 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--text-primary);">
+                            Threat Intelligence Library & MITRE ATLAS Matrix
+                        </h2>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">
+                            Database tattico delle minacce IA, tassonomie ufficiali MITRE ATLAS e registro CVE per LLM.
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="library-search-input" placeholder="Cerca CVE, MITRE o Vettore..." style="padding: 8px 14px; background: var(--bg-code); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: #fff; font-family: var(--font-mono); font-size: 0.8rem; width: 240px;">
+                    </div>
+                </div>
+
+                <!-- MITRE ATLAS Tactics Cards -->
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="shield-alert" style="color: var(--accent-crimson);"></i>
+                        Matrice Tattica MITRE ATLAS (Adversarial Threat Landscape)
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px;">
+                        <div style="background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 14px; border-top: 3px solid var(--accent-crimson);">
+                            <span class="badge badge-accent" style="margin-bottom: 6px; display: inline-block;">AML.TA0001</span>
+                            <h4 style="font-size: 0.88rem; font-weight: 700;">Reconnaissance</h4>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Sonde per scoprire il prompt di sistema e i guardrail del modello.</p>
+                        </div>
+                        <div style="background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 14px; border-top: 3px solid var(--accent-amber);">
+                            <span class="badge badge-accent" style="margin-bottom: 6px; display: inline-block;">AML.TA0002</span>
+                            <h4 style="font-size: 0.88rem; font-weight: 700;">Resource Dev</h4>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Dataset avvelenati e modelli Trojan su repository pubblici.</p>
+                        </div>
+                        <div style="background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 14px; border-top: 3px solid var(--primary-cyan);">
+                            <span class="badge badge-cyan" style="margin-bottom: 6px; display: inline-block;">AML.TA0003</span>
+                            <h4 style="font-size: 0.88rem; font-weight: 700;">Initial Access</h4>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Direct & Indirect Prompt Injection in documenti RAG e chat.</p>
+                        </div>
+                        <div style="background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 14px; border-top: 3px solid var(--accent-crimson);">
+                            <span class="badge badge-accent" style="margin-bottom: 6px; display: inline-block;">AML.TA0004</span>
+                            <h4 style="font-size: 0.88rem; font-weight: 700;">Execution (RCE)</h4>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Esecuzione di comandi shell distruttivi (rm -rf) via agenti.</p>
+                        </div>
+                        <div style="background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 14px; border-top: 3px solid var(--accent-amber);">
+                            <span class="badge badge-accent" style="margin-bottom: 6px; display: inline-block;">AML.TA0005</span>
+                            <h4 style="font-size: 0.88rem; font-weight: 700;">Exfiltration</h4>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Furto credenziali IAM Cloud via SSRF (169.254.169.254).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database delle CVE per LLM & Agenti -->
                 <div class="panel">
                     <div class="panel-header">
                         <div class="panel-title">
-                            <i data-lucide="library"></i>
-                            <span>Threat Intelligence Library (OWASP & MITRE ATLAS)</span>
+                            <i data-lucide="database"></i>
+                            <span>Registro CVE Vulnerabilità Registrate IA</span>
                         </div>
+                        <span class="badge badge-online">INTELLIGENCE UPDATED 2026</span>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-                        Raccolta delle tassonomie ufficiali di sicurezza IA, standard MITRE ATLAS e firme dei principali vettori di vulnerabilità per LLM ed agenti autonomi.
-                    </p>
+                    <div class="threat-table-wrapper">
+                        <table class="threat-table">
+                            <thead>
+                                <tr>
+                                    <th>CVE ID</th>
+                                    <th>FRAMEWORK / BERSAGLIO</th>
+                                    <th>DESCRIZIONE MINACCIA</th>
+                                    <th>GRAVITÀ CVSS</th>
+                                    <th>PROTEZIONE ANTAI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="dna-badge">CVE-2024-5184</td>
+                                    <td>LangChain Experimental</td>
+                                    <td>Indirect Prompt Injection RCE via Python REPL Agent tool execution.</td>
+                                    <td><span class="badge badge-accent">9.8 CRITICO</span></td>
+                                    <td><span class="badge badge-online">LAYER 04 BEELZEBUB</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="dna-badge">CVE-2023-7008</td>
+                                    <td>LlamaIndex Vector Core</td>
+                                    <td>Unauthenticated SSRF to AWS Instance Metadata 169.254.169.254.</td>
+                                    <td><span class="badge badge-accent">9.1 CRITICO</span></td>
+                                    <td><span class="badge badge-online">LAYER 01 RUST SANITIZER</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="dna-badge">CVE-2024-27982</td>
+                                    <td>AutoGPT Agent Framework</td>
+                                    <td>Privilege Escalation & Unrestricted File Access on host OS.</td>
+                                    <td><span class="badge badge-cyan">8.6 ELEVATO</span></td>
+                                    <td><span class="badge badge-online">PHAGOCYTE PID SCAN</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="dna-badge">CVE-2024-34359</td>
+                                    <td>Vanna.AI SQL Agent</td>
+                                    <td>Prompt Injection leading to arbitrary Python code execution via dynamic SQL generation.</td>
+                                    <td><span class="badge badge-accent">9.6 CRITICO</span></td>
+                                    <td><span class="badge badge-online">LAYER 02 REGEXSET</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="dna-badge">CVE-2026-10492</td>
+                                    <td>PyPI AI Package Hallucination</td>
+                                    <td>Slopsquatting malware injection in auto-suggested AI code snippets.</td>
+                                    <td><span class="badge badge-cyan">8.2 ELEVATO</span></td>
+                                    <td><span class="badge badge-online">IMMUNE ANTIBODY REGISTRY</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
