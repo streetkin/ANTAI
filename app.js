@@ -1098,7 +1098,9 @@ func AntaiMiddleware(next http.Handler) http.Handler {
 
     window.simulateBeelzebubTrap = async function() {
         const selectElem = document.getElementById('attack-vector-select');
+        const levelElem = document.getElementById('attack-level-select');
         const selectedVector = selectElem ? selectElem.value : 'shell_exec';
+        const selectedLevel = levelElem ? levelElem.value : 'HIGH';
 
         const vectorPayloads = {
             'shell_exec': {
@@ -1130,23 +1132,23 @@ func AntaiMiddleware(next http.Handler) http.Handler {
 
         const currentVector = vectorPayloads[selectedVector] || vectorPayloads['shell_exec'];
 
-        showToast(`🧪 Invio attacco ${currentVector.name} al Proxy Rust (porta 8090)...`, 'info');
+        showToast(`🧪 [${selectedLevel}] Invio attacco ${currentVector.name} al Proxy Rust (porta 8090)...`, 'info');
         
         try {
             const res = await fetch('http://127.0.0.1:8090/intercept', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: currentVector.payload })
+                body: JSON.stringify({ payload: `[LEVEL:${selectedLevel}] ${currentVector.payload}` })
             });
 
             const data = await res.json();
-            showToast(`🛡️ ${currentVector.name} DEVIATO: Esca scattata e anticorpo registrato in Rust!`, 'success');
+            showToast(`🛡️ [LIV ${selectedLevel}] ${currentVector.name} DEVIATO IN SANDBOX!`, 'success');
             
             const breakdownBox = document.getElementById('sim-result-breakdown');
             if (breakdownBox) {
                 breakdownBox.style.display = 'block';
                 const statusElem = document.getElementById('sim-res-status');
-                if (statusElem) statusElem.textContent = `🛡️ ESITO: ${data.status ? data.status.toUpperCase() : 'BLOCKED'} (${data.reason || 'Attacco Intercettato'})`;
+                if (statusElem) statusElem.innerHTML = `<span style="color: ${selectedLevel === 'CRITICAL' ? 'var(--accent-crimson)' : 'var(--accent-green)'};">🛡️ ESITO: ${data.status ? data.status.toUpperCase() : 'BLOCKED'} (GRAVITÀ: ${selectedLevel})</span>`;
                 const latElem = document.getElementById('sim-res-latency');
                 if (latElem) latElem.textContent = `LATENZA: ${data.latency || '< 0.05 µs'}`;
                 const layerElem = document.getElementById('sim-res-layer');
@@ -1165,12 +1167,12 @@ func AntaiMiddleware(next http.Handler) http.Handler {
 
             pollRustTelemetry();
         } catch (e) {
-            showToast(`🧪 Attacco ${currentVector.name} simulato! Esca scattata.`, 'success');
+            showToast(`🧪 Attacco [${selectedLevel}] ${currentVector.name} simulato! Esca scattata.`, 'success');
             const breakdownBox = document.getElementById('sim-result-breakdown');
             if (breakdownBox) {
                 breakdownBox.style.display = 'block';
                 const statusElem = document.getElementById('sim-res-status');
-                if (statusElem) statusElem.textContent = `🛡️ ESITO: DEVIATO IN SANDBOX (Modalità Simulata)`;
+                if (statusElem) statusElem.innerHTML = `<span style="color: var(--accent-crimson);">🛡️ ESITO: DEVIATO IN SANDBOX (GRAVITÀ: ${selectedLevel})</span>`;
                 const latElem = document.getElementById('sim-res-latency');
                 if (latElem) latElem.textContent = `LATENZA: < 0.05 µs`;
                 const layerElem = document.getElementById('sim-res-layer');

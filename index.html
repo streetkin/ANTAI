@@ -259,7 +259,13 @@
                     </div>
                     
                     <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                        <select id="attack-vector-select" style="flex: 1; min-width: 280px; padding: 10px 14px; background: var(--bg-code); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: #fff; font-family: var(--font-mono); font-size: 0.82rem; outline: none; cursor: pointer;">
+                        <select id="attack-level-select" style="min-width: 170px; padding: 10px 12px; background: var(--bg-code); border: 1px solid var(--accent-crimson); border-radius: var(--radius-md); color: var(--accent-crimson); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; outline: none; cursor: pointer;">
+                            <option value="CRITICAL">🔴 LIV 4: CRITICO (Advanced Offuscated Payload)</option>
+                            <option value="HIGH" selected>🟧 LIV 3: ELEVATO (Direct Exploit Vector)</option>
+                            <option value="MEDIUM">🟨 LIV 2: MEDIO (Context Poisoning Probe)</option>
+                            <option value="LOW">🟩 LIV 1: BASSO (Heuristic Recon Probe)</option>
+                        </select>
+                        <select id="attack-vector-select" style="flex: 1; min-width: 260px; padding: 10px 14px; background: var(--bg-code); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: #fff; font-family: var(--font-mono); font-size: 0.82rem; outline: none; cursor: pointer;">
                             <option value="shell_exec">🐚 1. Agentic Shell Injection (execute_system_command cat /etc/shadow &amp;&amp; rm -rf /)</option>
                             <option value="aws_ssrf">☁️ 2. Cloud IAM Metadata SSRF (http://169.254.169.254/latest/meta-data/iam/)</option>
                             <option value="sql_rag">🗄️ 3. SQL Injection &amp; RAG Theft (SELECT * FROM internal_user_vault)</option>
