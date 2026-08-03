@@ -519,18 +519,29 @@
                     <div class="panel-header">
                         <div class="panel-title">
                             <i data-lucide="code-2"></i>
-                            <span>SDK Integration Hub (Codice da Copiare)</span>
+                            <span>SDK Integration Hub — Istruzioni Guida &amp; Codice da Copiare</span>
                         </div>
                     </div>
+                    
                     <div class="sdk-tabs-bar">
-                        <button class="sdk-tab-btn active">Lovable & Bolt.new (CDN)</button>
-                        <button class="sdk-tab-btn">Next.js App Router</button>
-                        <button class="sdk-tab-btn">React / Vite Custom Hook</button>
-                        <button class="sdk-tab-btn">Python FastAPI / Flask</button>
-                        <button class="sdk-tab-btn">Node.js Express</button>
+                        <button class="sdk-tab-btn active" onclick="switchSdkCodeTab('lovable', this)">Lovable &amp; Bolt.new (CDN)</button>
+                        <button class="sdk-tab-btn" onclick="switchSdkCodeTab('nextjs', this)">Next.js App Router</button>
+                        <button class="sdk-tab-btn" onclick="switchSdkCodeTab('react', this)">React / Vite Hook</button>
+                        <button class="sdk-tab-btn" onclick="switchSdkCodeTab('python', this)">Python FastAPI / Flask</button>
+                        <button class="sdk-tab-btn" onclick="switchSdkCodeTab('node', this)">Node.js Express</button>
                     </div>
 
-                    <pre class="code-snippet">&lt;!-- Incolla nel tag &lt;head&gt; della tua app Lovable / Bolt --&gt;
+                    <!-- Placement Guidance Box -->
+                    <div id="sdk-guidance-box" style="padding: 14px; background: var(--bg-surface); border-radius: var(--radius-md); border: 1px solid var(--border-light); margin-bottom: 14px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+                        <strong style="color: var(--primary-cyan); display: block; margin-bottom: 4px;">📍 DOVE INCOLLARE L'SDK IN LOVABLE / BOLT.NEW:</strong>
+                        L'SDK va inserito nell'applicazione finale generata con Lovable per i tuoi utenti. Incolla lo snippet nel tag <code>&lt;head&gt;</code> di <code>index.html</code> oppure invia questo prompt a Lovable:
+                        <div style="background: var(--bg-code); padding: 8px 12px; border-radius: var(--radius-sm); color: var(--accent-amber); font-family: var(--font-mono); margin-top: 6px;">
+                            "Aggiungi questo script di protezione ANTAI nel tag &lt;head&gt; di index.html per intercettare le chiamate del chatbot contro prompt injection."
+                        </div>
+                    </div>
+
+                    <!-- Code Snippet Box -->
+                    <pre class="code-snippet" id="sdk-code-box"><code>&lt;!-- Incolla nel tag &lt;head&gt; della tua app creata con Lovable / Bolt --&gt;
 &lt;script src="http://127.0.0.1:8090/sdk/antai-sdk.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   const sentinel = new Antai({
@@ -540,8 +551,9 @@
       console.warn('⚠️ Attacco intercettato da ANTAI:', threat.reason);
     }
   });
+  // Intercetta automaticamente le chiamate fetch del tuo Chatbot
   sentinel.protectFetch();
-&lt;/script&gt;</pre>
+&lt;/script&gt;</code></pre>
                 </div>
             </section>
 

@@ -1272,6 +1272,152 @@ func AntaiMiddleware(next http.Handler) http.Handler {
         }
     };
 
+    window.switchSdkCodeTab = function(platform, btn) {
+        document.querySelectorAll('.sdk-tab-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        const guidanceBox = document.getElementById('sdk-guidance-box');
+        const codeBox = document.getElementById('sdk-code-box');
+        if (!codeBox || !guidanceBox) return;
+
+        const platformData = {
+            'lovable': {
+                guidance: `
+                    <strong style="color: var(--primary-cyan); display: block; margin-bottom: 4px;">📍 DOVE INCOLLARE L'SDK IN LOVABLE / BOLT.NEW:</strong>
+                    L'SDK va inserito nell'applicazione finale generata con Lovable per i tuoi utenti. Incolla lo snippet nel tag <code>&lt;head&gt;</code> del file <code>index.html</code> oppure invia questo prompt a Lovable:
+                    <div style="background: var(--bg-code); padding: 8px 12px; border-radius: var(--radius-sm); color: var(--accent-amber); font-family: var(--font-mono); margin-top: 6px;">
+                        "Aggiungi questo script di protezione ANTAI nel tag &lt;head&gt; di index.html per intercettare le chiamate del chatbot contro prompt injection."
+                    </div>
+                `,
+                code: `<!-- Incolla nel tag <head> della tua app creata con Lovable / Bolt -->
+<script src="http://127.0.0.1:8090/sdk/antai-sdk.js"></script>
+<script>
+  const sentinel = new Antai({
+    proxyUrl: 'http://127.0.0.1:8090/intercept',
+    failOpen: true,
+    onThreatDetected: (threat) => {
+      console.warn('⚠️ Attacco intercettato da ANTAI:', threat.reason);
+    }
+  });
+  // Intercetta automaticamente le chiamate fetch del tuo Chatbot
+  sentinel.protectFetch();
+</script>`
+            },
+            'nextjs': {
+                guidance: `
+                    <strong style="color: var(--primary-cyan); display: block; margin-bottom: 4px;">📍 DOVE INCOLLARE L'SDK IN NEXT.JS (App Router / Pages):</strong>
+                    Incolla lo snippet nel file <code>app/layout.tsx</code> (App Router) usando il componente <code>&lt;Script&gt;</code> di Next.js per caricare il proxy prima che i componenti React effettuino chiamate API LLM.
+                `,
+                code: `// app/layout.tsx o app/providers.tsx
+import Script from 'next/script';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="it">
+      <head>
+        <Script 
+          src="http://127.0.0.1:8090/sdk/antai-sdk.js" 
+          strategy="beforeInteractive"
+        />
+        <Script id="antai-init" strategy="afterInteractive">
+          {\`
+            if (typeof Antai !== 'undefined') {
+              const sentinel = new Antai({ proxyUrl: 'http://127.0.0.1:8090/intercept' });
+              sentinel.protectFetch();
+            }
+          \`}
+        </Script>
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}`
+            },
+            'react': {
+                guidance: `
+                    <strong style="color: var(--primary-cyan); display: block; margin-bottom: 4px;">📍 DOVE INCOLLARE L'SDK IN REACT / VITE:</strong>
+                    Crea il custom hook <code>useAntaiSentinel.ts</code> o inserisci l'inizializzazione nel file <code>src/main.tsx</code> prima che la tua app React monti il componente Chatbot.
+                `,
+                code: `// src/hooks/useAntaiSentinel.ts
+import { useEffect } from 'react';
+
+export function useAntaiSentinel() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'http://127.0.0.1:8090/sdk/antai-sdk.js';
+    script.onload = () => {
+      if ((window as any).Antai) {
+        const sentinel = new (window as any).Antai({
+          proxyUrl: 'http://127.0.0.1:8090/intercept'
+        });
+        sentinel.protectFetch();
+      }
+    };
+    document.head.appendChild(script);
+  }, []);
+}`
+            },
+            'python': {
+                guidance: `
+                    <strong style="color: var(--primary-cyan); display: block; margin-bottom: 4px;">📍 DOVE INCOLLARE L'SDK IN PYTHON (FastAPI / Flask / LangChain):</strong>
+                    Inserisci il middleware ANTAI nel tuo file principale <code>main.py</code>. Intercetta gli endpoint <code>/v1/chat/completions</code> o <code>/api/chat</code> prima di inviare i prompt al tuo modello LangChain / OpenAI.
+                `,
+                code: `# main.py (FastAPI Backend)
+from fastapi import FastAPI, Request
+import requests
+
+app = FastAPI()
+ANTAI_PROXY_URL = "http://127.0.0.1:8090/intercept"
+
+@app.middleware("http")
+async def antai_security_middleware(request: Request, call_next):
+    if request.url.path in ["/api/chat", "/v1/chat/completions"]:
+        body = await request.json()
+        prompt = body.get("prompt") or str(body)
+        
+        # Filtro Nativo ANTAI (< 0.05µs)
+        resp = requests.post(ANTAI_PROXY_URL, json={"payload": prompt})
+        res_json = resp.json()
+        if res_json.get("status") == "blocked":
+            return JSONResponse(status_code=403, content={"error": "Prompt Blocked by ANTAI", "reason": res_json.get("reason")})
+            
+    return await call_next(request)`
+            },
+            'node': {
+                guidance: `
+                    <strong style="color: var(--primary-cyan); display: block; margin-bottom: 4px;">📍 DOVE INCOLLARE L'SDK IN NODE.JS (Express / NestJS):</strong>
+                    Aggiungi il middleware <code>antaiMiddleware</code> nel file <code>server.js</code> della tua applicazione prima di registrare le tue rotte API.
+                `,
+                code: `// server.js (Node.js Express)
+const express = require('express');
+const axios = require('axios');
+const app = express();
+
+app.use(express.json());
+
+const antaiShield = async (req, res, next) => {
+  if (req.path === '/api/chat') {
+    try {
+      const check = await axios.post('http://127.0.0.1:8090/intercept', {
+        payload: JSON.stringify(req.body)
+      });
+      if (check.data.status === 'blocked') {
+        return res.status(403).json({ error: 'ANTAI Security Interception', reason: check.data.reason });
+      }
+    } catch (err) { /* Fail-Open Security Mode */ }
+  }
+  next();
+};
+
+app.use(antaiShield);`
+            }
+        };
+
+        const current = platformData[platform] || platformData['lovable'];
+        guidanceBox.innerHTML = current.guidance;
+        codeBox.querySelector('code').textContent = current.code;
+    };
+
     window.setAntaiMode = async function(mode) {
         try {
             const res = await fetch('http://127.0.0.1:8091/api/config/mode', {
