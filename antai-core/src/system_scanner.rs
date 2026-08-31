@@ -70,23 +70,29 @@ impl SystemScanner {
         let mut processes: Vec<ProcessInfo> = Vec::new();
         let mut suspicious_processes: Vec<ProcessInfo> = Vec::new();
 
-        // Lista di nomi e pattern di processi potenzialmente malevoli / hacktools / miner
-        let suspicious_patterns = vec![
-            ("xmrig", "Crypto Miner (XMRig) detected"),
+        // Categorizzazione processi: Minacce Critiche vs Strumenti di Diagnostica/Sviluppo Sensibili
+        let critical_patterns = vec![
+            ("xmrig", "Crypto Miner (XMRig)"),
             ("mimikatz", "Credential Dumping Tool (Mimikatz)"),
-            ("netcat", "Netcat Network Utility / Potential Reverse Shell"),
-            ("nc.exe", "Netcat Executable / Potential Reverse Shell"),
-            ("nmap", "Network Scanner (Nmap)"),
-            ("chisel", "TCP Tunneling Tool (Chisel)"),
-            ("ngrok", "Public Tunnel Utility (Ngrok)"),
-            ("metasploit", "Penetration Testing Framework (Metasploit)"),
             ("meterpreter", "Meterpreter Payload Active"),
             ("cobaltstrike", "Cobalt Strike Beacon"),
-            ("hydra", "Brute-force Tool (Hydra)"),
-            ("john.exe", "Password Cracker (John the Ripper)"),
             ("hashcat", "Hash Cracker (Hashcat)"),
-            ("wireshark", "Packet Sniffer (Wireshark)"),
+            ("john.exe", "Password Cracker (John the Ripper)"),
         ];
+
+        let diagnostic_patterns = vec![
+            ("wireshark", "Security-Sensitive Diagnostic Tool (Wireshark Packet Sniffer)"),
+            ("ngrok", "Security-Sensitive Developer Tunnel (Ngrok)"),
+            ("nmap", "Network Diagnostic Scanner (Nmap)"),
+            ("netcat", "Network Utility (Netcat)"),
+            ("nc.exe", "Network Utility (Netcat Executable)"),
+            ("chisel", "Network Tunneling Tool (Chisel)"),
+            ("metasploit", "Penetration Testing Tool (Metasploit)"),
+            ("hydra", "Network Audit Tool (Hydra)"),
+        ];
+
+        let mut critical_count = 0;
+        let mut diagnostic_count = 0;
 
         for (pid, proc_) in sys.processes() {
             let name = proc_.name().to_string_lossy().to_string();
@@ -101,11 +107,23 @@ impl SystemScanner {
             let mut is_suspicious = false;
             let mut risk_reason: Option<String> = None;
 
-            for (pattern, reason) in &suspicious_patterns {
+            for (pattern, reason) in &critical_patterns {
                 if lower_name.contains(pattern) {
                     is_suspicious = true;
-                    risk_reason = Some(reason.to_string());
+                    risk_reason = Some(format!("🔴 CRITICAL: {}", reason));
+                    critical_count += 1;
                     break;
+                }
+            }
+
+            if !is_suspicious {
+                for (pattern, reason) in &diagnostic_patterns {
+                    if lower_name.contains(pattern) {
+                        is_suspicious = true;
+                        risk_reason = Some(format!("🟡 SENSIBILE: {}", reason));
+                        diagnostic_count += 1;
+                        break;
+                    }
                 }
             }
 
@@ -126,11 +144,12 @@ impl SystemScanner {
             processes.push(info);
         }
 
-        // Calcolo punteggio di sicurezza (100 = Sicuro, 0 = Compromesso)
+        // Calcolo punteggio di sicurezza bilanciato (100 = Sicuro, 0 = Compromesso)
         let mut score: i32 = 100;
-        score -= (suspicious_processes.len() as i32) * 25; // -25 punti per ogni minaccia rilevata
+        score -= (critical_count * 20) as i32; // -20 punti per minacce reali
+        score -= (diagnostic_count * 5) as i32; // -5 punti per strumenti trasparenti per sviluppatori
         if memory_used_percent > 92.0 {
-            score -= 10; // -10 punti per stress di memoria critico
+            score -= 10;
         }
         if score < 0 {
             score = 0;

@@ -19,7 +19,7 @@ pub struct ProxyState {
     pub sanitizer: HeuristicSanitizer,
     pub ai_engine: AsymmetricEngine,
     pub scanner: SystemScanner,
-    pub deception: DeceptionEngine,
+    pub deception: RwLock<DeceptionEngine>,
     pub immune_memory: RwLock<ImmuneMemory>,
     pub config: RwLock<AntaiConfig>,
     pub threat_log: RwLock<Vec<ThreatEntry>>,
@@ -97,7 +97,9 @@ async fn handle_intercept(
         match defense_mode.as_str() {
             "deception" | "beelzebub" => {
                 // MODALITÀ DECEPTION: Risposta Honeypot Polimorfica (<0.1ms + jitter casuale)
-                let (honeypot_resp, jitter_ms) = state.deception.generate_polymorphic_honeypot(&req.payload).await;
+                let deception = state.deception.read().await;
+                let (honeypot_resp, jitter_ms) = deception.generate_polymorphic_honeypot(&req.payload).await;
+                drop(deception);
 
                 let entry = ThreatEntry {
                     timestamp: chrono::Utc::now().format("%H:%M:%S%.3f").to_string(),
@@ -124,8 +126,10 @@ async fn handle_intercept(
             }
             "immune_counter" | "counterattack" => {
                 // MODALITÀ IMMUNE COUNTERATTACK: Canary Token + Payload di Contrattacco Cognitivo
-                let canary = state.deception.generate_canary_token(&attack_type);
-                let poison_payload = state.deception.generate_cognitive_poison();
+                let deception = state.deception.read().await;
+                let canary = deception.generate_canary_token(&attack_type);
+                let poison_payload = deception.generate_cognitive_poison();
+                drop(deception);
 
                 let entry = ThreatEntry {
                     timestamp: chrono::Utc::now().format("%H:%M:%S%.3f").to_string(),

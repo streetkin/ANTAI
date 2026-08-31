@@ -87,7 +87,7 @@ async fn main() {
         sanitizer,
         ai_engine,
         scanner,
-        deception,
+        deception: RwLock::new(deception),
         immune_memory: RwLock::new(immune_memory),
         config: RwLock::new(config.clone()),
         threat_log: RwLock::new(Vec::new()),

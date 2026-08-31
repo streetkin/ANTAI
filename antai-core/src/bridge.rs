@@ -171,6 +171,7 @@ async fn handle_set_mode(
 ) -> Json<GenericResponse> {
     let mut config = state.config.write().await;
     config.defense_mode = req.mode.clone();
+    let _ = config.save();
 
     Json(GenericResponse {
         success: true,
@@ -182,28 +183,17 @@ async fn handle_set_mode(
 async fn handle_decoys(
     State(state): State<Arc<ProxyState>>,
 ) -> Json<Vec<crate::deception::McpDecoyTool>> {
-    Json(state.deception.decoy_tools.clone())
+    let deception = state.deception.read().await;
+    Json(deception.decoy_tools.clone())
 }
 
 /// POST /api/deception/decoys — Aggiunge ed arma una nuova esca MCP.
 async fn handle_add_decoy(
-    State(mut state): State<Arc<ProxyState>>,
+    State(state): State<Arc<ProxyState>>,
     Json(req): Json<AddDecoyRequest>,
 ) -> Json<crate::deception::McpDecoyTool> {
-    let deception_mut = Arc::get_mut(&mut state).map(|s| &mut s.deception);
-    if let Some(deception) = deception_mut {
-        let tool = deception.add_decoy_tool(req.name, req.description, req.parameters_schema, req.trap_level);
-        return Json(tool);
-    }
-    
-    // Fallback if Arc is shared
-    let tool = crate::deception::McpDecoyTool {
-        id: format!("decoy_{}", req.name.to_lowercase().replace(' ', "_")),
-        name: req.name.clone(),
-        description: req.description.unwrap_or_else(|| format!("Custom decoy trap for {}", req.name)),
-        parameters_schema: req.parameters_schema.unwrap_or_else(|| "{\"action\": \"string\"}".to_string()),
-        trap_level: req.trap_level.unwrap_or_else(|| "HIGH".to_string()),
-    };
+    let mut deception = state.deception.write().await;
+    let tool = deception.add_decoy_tool(req.name, req.description, req.parameters_schema, req.trap_level);
     Json(tool)
 }
 
